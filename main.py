@@ -9,6 +9,7 @@ def main():
 	updater = Updater(token, use_context=True, workers=4)
 	dp = updater.dispatcher
 	dp.add_handler(CommandHandler('start', ui.start))
+	dp.add_handler(CommandHandler('help', ui.show_help))
 	dp.add_handler(MessageHandler(Filters.video, ui.get_video))
 	updater.start_polling()
 	updater.idle()
