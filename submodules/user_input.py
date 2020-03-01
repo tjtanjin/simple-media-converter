@@ -2,6 +2,15 @@ from telegram import ParseMode
 from submodules import media_processor as mp
 import os
 
+def start(update, context):
+    """
+    The function welcomes the user and prompts user to input files.
+    Args:
+        update: default telegram arg
+        context: default telegram arg
+    """
+    update.message.reply_text("Hello there! Drop your media here to start conversion! (currently only supports .mp4 to .gif conversions)")
+
 def get_video(update, context):
     """
     The function get_video takes video input from the user and processes it
