@@ -27,10 +27,12 @@ def get_video(update, context):
         update.message.reply_text("Received file and processing... Please be patient.")
         mp.video_to_gif(chat_id)
         context.bot.send_document(chat_id=chat_id, document=open('./media/{}.gif'.format(chat_id), 'rb'), caption="Conversion successful!")
+    except Exception as ex:
+        context.bot.send_message(chat_id=chat_id, text='An error has occurred. Please open an issue at our <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!', parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        print(ex)
+    finally:
         os.remove("./media/{}.mp4".format(chat_id))
         os.remove("./media/{}.gif".format(chat_id))
-    except:
-        context.bot.send_message(chat_id=chat_id, text='An error has occurred. Please open an issue at our <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!.', parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     return None
 
 def show_help(update, context):
