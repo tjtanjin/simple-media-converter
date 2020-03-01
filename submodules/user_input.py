@@ -23,10 +23,10 @@ def get_video(update, context):
     file_id = update.message.video.file_id
     newFile = context.bot.get_file(file_id, timeout=None)
     newFile.download('./media/{}.mp4'.format(chat_id))
-    update.message.reply_text("Received file and processing...")
+    update.message.reply_text("Received file and processing... Please be patient.")
     mp.video_to_gif(chat_id)
     context.bot.send_document(chat_id=chat_id, document=open('./media/{}.gif'.format(chat_id), 'rb'))
-    context.bot.send_message(chat_id=chat_id, text="Conversion successful.")
+    context.bot.send_message(chat_id=chat_id, text="Conversion successful!")
     os.remove("./media/{}.mp4".format(chat_id))
     os.remove("./media/{}.gif".format(chat_id))
     return None
