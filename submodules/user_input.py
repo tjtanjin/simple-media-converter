@@ -20,7 +20,7 @@ def get_document(update, context):
         context: default telegram arg
     """
     input_type = update.message.document.mime_type[6:]
-    if input_type == "gif" or input_type == "avi" or input_type == "webm" or input_type == "mp4":
+    if input_type == "gif" or input_type == "x-msvideo" or input_type == "webm" or input_type == "mp4":
         get_video(update, context)
     else:
         pass
