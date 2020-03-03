@@ -12,17 +12,18 @@ def build_menu(buttons, header_buttons=None, footer_buttons=None):
         menu.append(footer_buttons)
     return menu
 
-def show_options(n_rows, text, input_type):
+def show_options(n_rows, text, media_type, input_type):
     """
     Function that takes in button text and callback data to generate the view.
     Args:
         n_rows: rows for button
         text: list of texts to show
+        media_type: currently supports videos and images
         input_type: format of video
     """
     button_list = []
     for i in range(0,n_rows):
-        button_list.append([InlineKeyboardButton(text[i], callback_data="video_" + input_type + "_" + text[i])])
+        button_list.append([InlineKeyboardButton(text[i], callback_data=media_type + "_" + input_type + "_" + text[i])])
     reply_markup = InlineKeyboardMarkup(build_menu(button_list))
     return reply_markup
 

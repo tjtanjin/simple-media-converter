@@ -30,5 +30,7 @@ def convert_image(chat_id, input_type, output_type):
 		output_type: video output type
 	"""
 	img = Image.open('./input_media/{}.{}'.format(chat_id, input_type))
+	if output_type == "jpg" or (input_type == "tiff" and output_type == "pdf"):
+		img = img.convert('RGB')
 	img.save('./output_media/{}.{}'.format(chat_id, output_type), quality=95, optimize=True)
 	return None

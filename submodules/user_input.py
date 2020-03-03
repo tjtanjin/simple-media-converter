@@ -6,8 +6,8 @@ import os, re
 video_types = ["gif", "avi", "webm", "mp4", "flv", "mov"]
 video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov"]
 
-image_types = ["png", "jpg"]
-image_types_format_name = ["png", "jpg", "jpeg"]
+image_types = ["png", "jpg", "tiff", "pdf"]
+image_types_format_name = ["png", "jpg", "jpeg", "tiff", "pdf"]
 
 def start(update, context):
     """
@@ -54,7 +54,7 @@ def get_video(update, context):
     receiving_msg = context.bot.send_message(chat_id=chat_id, text="Video file detected. Preparing file...")
     newFile = context.bot.get_file(file_id, timeout=None)
     newFile.download('./input_media/{}.{}'.format(chat_id, input_type))
-    reply_markup = mc.show_options(len(video_types), video_types, input_type)
+    reply_markup = mc.show_options(len(video_types), video_types, "video", input_type)
     receiving_msg.edit_text(text="Please select the file type to convert to:", reply_markup=reply_markup)
     return None
 
@@ -108,7 +108,7 @@ def get_photo(update, context):
         receiving_msg = context.bot.send_message(chat_id=chat_id, text="Image file detected. Preparing file...")
         newFile = context.bot.get_file(file_id, timeout=None)
         newFile.download('./input_media/{}.{}'.format(chat_id, input_type))
-        reply_markup = mc.show_options(len(image_types), image_types, input_type)
+        reply_markup = mc.show_options(len(image_types), image_types, "photo", input_type)
         receiving_msg.edit_text(text="Please select the file type to convert to:", reply_markup=reply_markup)
         return None
     except Exception as ex:
@@ -174,6 +174,8 @@ def show_help(update, context):
         .mov\n
     <b>Images:</b>
         .png
-        .jpg/jpeg\n
+        .jpg/jpeg
+        .tiff
+        .pdf\n
 Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!""", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     return None
