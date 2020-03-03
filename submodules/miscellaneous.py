@@ -22,7 +22,7 @@ def show_options(n_rows, text, input_type):
     """
     button_list = []
     for i in range(0,n_rows):
-        button_list.append([InlineKeyboardButton(text[i], callback_data=input_type + "_" + text[i])])
+        button_list.append([InlineKeyboardButton(text[i], callback_data="video_" + input_type + "_" + text[i])])
     reply_markup = InlineKeyboardMarkup(build_menu(button_list))
     return reply_markup
 

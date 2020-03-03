@@ -1,10 +1,11 @@
 import ffmpy, os
+from PIL import Image
 
 def convert_video(chat_id, input_type, output_type):
 	"""
-	The function video of one type to another.
+	The function converts video of one type to another.
 	Args:
-		chat_id: unique identification for video name
+		chat_id: unique identification for video
 		input_type: video input type
 		output_type: video output type
 	"""
@@ -18,4 +19,16 @@ def convert_video(chat_id, input_type, output_type):
 	    outputs=outputs
 	)
 	ff.run()
+	return None
+
+def convert_image(chat_id, input_type, output_type):
+	"""
+	The function converts image of one type to another.
+	Args:
+		chat_id: unique identification for image
+		input_type: video input type
+		output_type: video output type
+	"""
+	img = Image.open('./input_media/{}.{}'.format(chat_id, input_type))
+	img.save('./output_media/{}.{}'.format(chat_id, output_type), quality=95, optimize=True)
 	return None
