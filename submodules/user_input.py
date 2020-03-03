@@ -9,6 +9,8 @@ video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov"]
 image_types = ["png", "jpg", "tiff", "pdf"]
 image_types_format_name = ["png", "jpg", "jpeg", "tiff"]
 
+sticker_types = ["png", "jpg", "tiff", "gif"]
+
 def start(update, context):
     """
     The function welcomes the user and prompts user to input files.
@@ -46,7 +48,12 @@ def get_sticker(update, context):
     if update.message.sticker.is_animated:
         update.message.reply_text("This bot currently does not support animated stickers :(")
     else:
-        get_photo(update, context)
+        chat_id = update.message.chat_id
+        receiving_msg = context.bot.send_message(chat_id=chat_id, text="Sticker detected. Preparing file...")
+        newFile = context.bot.get_file(file_id, timeout=None)
+        newFile.download('./input_media/{}.{}'.format(chat_id, input_type))
+        reply_markup = mc.show_options(len(sticker_types), sticker_types, "photo", input_type)
+        receiving_msg.edit_text(text="Please select the file type to convert to:", reply_markup=reply_markup)
     return None
 
 def get_video(update, context):
@@ -197,6 +204,13 @@ def show_help(update, context):
         .jpg     |   .jpg
         .tiff    |   .tiff
                  |   .pdf\n
+    </pre>
+    <b>Stickers:</b><pre>
+        Input:   |   Output:
+        Telegram |   .png
+        Sticker  |   .jpg
+                 |   .tiff
+                 |   .gif\n
     </pre>
 Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!""", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     return None
