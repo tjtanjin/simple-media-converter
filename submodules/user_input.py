@@ -165,17 +165,21 @@ def show_help(update, context):
         context: default telegram arg
     """
     update.message.reply_text("""Here are the currently available conversion types:\n
-    <b>Videos:</b>
-        .mp4
-        .webm
-        .gif
-        .avi
-        .flv
-        .mov\n
-    <b>Images:</b>
-        .png
-        .jpg/jpeg
-        .tiff
-        .pdf\n
+    <b>Videos:</b><pre>
+        Input:   |   Output:
+        .mp4     |   .mp4
+        .webm    |   .webm
+        .gif     |   .gif
+        .avi     |   .avi
+        .flv     |   .flv
+        .mov     |   .mov\n
+    </pre>
+    <b>Images:</b><pre>
+        Input:   |   Output:
+        .png     |   .png
+        .jpg     |   .jpg
+        .tiff    |   .tiff
+                 |   .pdf\n
+    </pre>
 Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!""", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     return None
