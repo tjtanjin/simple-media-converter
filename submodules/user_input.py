@@ -7,7 +7,7 @@ video_types = ["gif", "avi", "webm", "mp4", "flv", "mov"]
 video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov"]
 
 image_types = ["png", "jpg", "tiff", "pdf"]
-image_types_format_name = ["png", "jpg", "jpeg", "tiff", "pdf"]
+image_types_format_name = ["png", "jpg", "jpeg", "tiff"]
 
 def start(update, context):
     """
@@ -31,7 +31,7 @@ def get_document(update, context):
     elif input_type in image_types_format_name:
         get_photo(update, context)
     else:
-        pass
+        update.message.reply_text("Unsupported file uploaded. Do /help to see supported file formats.")
     return None
 
 def get_video(update, context):
