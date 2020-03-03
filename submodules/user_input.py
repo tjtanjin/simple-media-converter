@@ -3,6 +3,9 @@ from submodules import media_processor as mp
 from submodules import miscellaneous as mc
 import os, re
 
+video_types = ["gif", "avi", "webm", "mp4", "flv", "mov"]
+video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov"]
+
 def start(update, context):
     """
     The function welcomes the user and prompts user to input files.
@@ -20,7 +23,7 @@ def get_document(update, context):
         context: default telegram arg
     """
     input_type = update.message.document.mime_type[6:]
-    if input_type == "gif" or input_type == "x-msvideo" or input_type == "webm" or input_type == "mp4":
+    if input_type in video_types_format_name:
         get_video(update, context)
     else:
         pass
@@ -43,10 +46,10 @@ def get_video(update, context):
         input_type = update.message.document.mime_type[6:]
 
     chat_id = update.message.chat_id
-    receiving_msg = context.bot.send_message(chat_id=chat_id, text="Receiving file...")
+    receiving_msg = context.bot.send_message(chat_id=chat_id, text="Video file detected. Preparing file...")
     newFile = context.bot.get_file(file_id, timeout=None)
     newFile.download('./input_media/{}.{}'.format(chat_id, input_type))
-    reply_markup = mc.show_options(4, ["gif", "avi", "webm", "mp4"], input_type)
+    reply_markup = mc.show_options(6, video_types, input_type)
     receiving_msg.edit_text(text="Please select the file type to convert to:", reply_markup=reply_markup)
     return None
 
@@ -66,15 +69,16 @@ def output_type(update, context):
         match_file = re.match(r'(\S+)_(\S+)', data)
         input_type, output_type = match_file.group(1), match_file.group(2)
         if mc.check_exist_media(chat_id, input_type):
-            context.bot.send_message(chat_id=chat_id, text="Processing file...")
+            processing_msg = context.bot.send_message(chat_id=chat_id, text="Processing {} file...".format(output_type))
             mp.convert_video(chat_id, input_type, output_type)
-            context.bot.send_document(chat_id=chat_id, document=open('./output_media/{}.{}'.format(chat_id, output_type), 'rb'), caption="Conversion successful!")
+            processing_msg.edit_text(text="File converted to {} format.".format(output_type))
+            context.bot.send_document(chat_id=chat_id, document=open('./output_media/{}.{}'.format(chat_id, output_type), 'rb'), caption="Here is your file!")
         else:
             context.bot.send_message(chat_id=chat_id, text="File not found, please upload again.")
             return None
     # throw error on failure
     except Exception as ex:
-        context.bot.send_message(chat_id=chat_id, text='An error has occurred. Please open an issue at our <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!', parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        processing_msg.edit_text('An error has occurred. Please open an issue at our <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!', parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         print(ex)
     # remove all media files at the end
     finally:
@@ -95,6 +99,8 @@ def show_help(update, context):
         <b>.mp4</b>
         <b>.webm</b>
         <b>.gif</b>
-        <b>.avi</b>\n
+        <b>.avi</b>
+        <b>.flv</b>
+        <b>.mov</b>\n
 Drop a video to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!""", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     return None
