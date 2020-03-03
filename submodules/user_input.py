@@ -34,6 +34,21 @@ def get_document(update, context):
         update.message.reply_text("Unsupported file uploaded. Do /help to see supported file formats.")
     return None
 
+def get_sticker(update, context):
+    """
+    This function captures telegram stickers.
+    Args:
+        update: default telegram arg
+        context: default telegram arg
+    """
+    file_id = update.message.sticker.file_id
+    input_type = "jpg"
+    if update.message.sticker.is_animated:
+        update.message.reply_text("This bot currently does not support animated stickers :(")
+    else:
+        get_photo(update, context)
+    return None
+
 def get_video(update, context):
     """
     The function get_video takes video input from the user and processes it
@@ -49,6 +64,7 @@ def get_video(update, context):
     except:
         file_id = update.message.document.file_id
         input_type = update.message.document.mime_type[6:]
+
 
     chat_id = update.message.chat_id
     receiving_msg = context.bot.send_message(chat_id=chat_id, text="Video file detected. Preparing file...")
@@ -74,9 +90,9 @@ def output_video_type(update, context):
         match_file = re.match(r'video_(\S+)_(\S+)', data)
         input_type, output_type = match_file.group(1), match_file.group(2)
         if mc.check_exist_media(chat_id, input_type):
-            processing_msg = context.bot.send_message(chat_id=chat_id, text="Processing {} file...".format(output_type))
+            processing_msg = context.bot.send_message(chat_id=chat_id, text="Converting {} file to {}...".format(input_type, output_type))
             mp.convert_video(chat_id, input_type, output_type)
-            processing_msg.edit_text(text="File converted to {} format.".format(output_type))
+            processing_msg.edit_text(text="Converted to {} format. Retrieving file...".format(output_type))
             context.bot.send_document(chat_id=chat_id, document=open('./output_media/{}.{}'.format(chat_id, output_type), 'rb'), caption="Here is your file!")
         else:
             context.bot.send_message(chat_id=chat_id, text="File not found, please upload again.")
@@ -103,16 +119,17 @@ def get_photo(update, context):
     try:
         file_id = update.message.document.file_id
         input_type = update.message.document.mime_type[6:]
+    except:
+        file_id = update.message.sticker.file_id
+        input_type = "jpg"
 
-        chat_id = update.message.chat_id
-        receiving_msg = context.bot.send_message(chat_id=chat_id, text="Image file detected. Preparing file...")
-        newFile = context.bot.get_file(file_id, timeout=None)
-        newFile.download('./input_media/{}.{}'.format(chat_id, input_type))
-        reply_markup = mc.show_options(len(image_types), image_types, "photo", input_type)
-        receiving_msg.edit_text(text="Please select the file type to convert to:", reply_markup=reply_markup)
-        return None
-    except Exception as ex:
-        print(ex)
+    chat_id = update.message.chat_id
+    receiving_msg = context.bot.send_message(chat_id=chat_id, text="Image file detected. Preparing file...")
+    newFile = context.bot.get_file(file_id, timeout=None)
+    newFile.download('./input_media/{}.{}'.format(chat_id, input_type))
+    reply_markup = mc.show_options(len(image_types), image_types, "photo", input_type)
+    receiving_msg.edit_text(text="Please select the file type to convert to:", reply_markup=reply_markup)
+    return None
 
 def output_photo_type(update, context):
     """
@@ -130,9 +147,9 @@ def output_photo_type(update, context):
         match_file = re.match(r'photo_(\S+)_(\S+)', data)
         input_type, output_type = match_file.group(1), match_file.group(2)
         if mc.check_exist_media(chat_id, input_type):
-            processing_msg = context.bot.send_message(chat_id=chat_id, text="Processing {} file...".format(output_type))
+            processing_msg = context.bot.send_message(chat_id=chat_id, text="Converting {} file to {}...".format(input_type, output_type))
             mp.convert_image(chat_id, input_type, output_type)
-            processing_msg.edit_text(text="File converted to {} format.".format(output_type))
+            processing_msg.edit_text(text="Converted to {} format. Retrieving file...".format(output_type))
             context.bot.send_document(chat_id=chat_id, document=open('./output_media/{}.{}'.format(chat_id, output_type), 'rb'), caption="Here is your file!")
         else:
             context.bot.send_message(chat_id=chat_id, text="File not found, please upload again.")
