@@ -123,14 +123,18 @@ def get_photo(update, context):
         context: default telegram arg
     """
     # accounts for different file format of user input
+    chat_id = update.message.chat_id
     try:
         file_id = update.message.document.file_id
         input_type = update.message.document.mime_type[6:]
     except:
-        file_id = update.message.sticker.file_id
+        try:
+            file_id = update.message.photo[-1].file_id
+            context.bot.send_message(chat_id=chat_id, text="You sent your image as a photo. If you run into conversion issues, send your image as a file instead.")
+        except:
+            file_id = update.message.sticker.file_id
         input_type = "jpg"
 
-    chat_id = update.message.chat_id
     receiving_msg = context.bot.send_message(chat_id=chat_id, text="Image file detected. Preparing file...")
     newFile = context.bot.get_file(file_id, timeout=None)
     newFile.download('./input_media/{}.{}'.format(chat_id, input_type))
@@ -169,16 +173,6 @@ def output_photo_type(update, context):
     finally:
         os.remove("./input_media/{}.{}".format(chat_id, input_type))
         os.remove("./output_media/{}.{}".format(chat_id, output_type))
-    return None
-
-def reject_photo(update, context):
-    """
-    The function requests user to send photos as files instead.
-    Args:
-        update: default telegram arg
-        context: default telegram arg
-    """
-    update.message.reply_text("Please send your image as a file instead.")
     return None
 
 def show_help(update, context):
