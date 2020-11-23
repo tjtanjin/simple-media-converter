@@ -3,8 +3,8 @@ from submodules import media_processor as mp
 from submodules import miscellaneous as mc
 import os, re
 
-video_types = ["gif", "avi", "webm", "mp4", "flv", "mov"]
-video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov"]
+video_types = ["gif", "avi", "webm", "mp4", "flv", "mov", "mkv"]
+video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov", "x-matroska"]
 
 image_types = ["png", "jpg", "tiff", "pdf"]
 image_types_format_name = ["png", "jpg", "jpeg", "tiff"]
@@ -71,7 +71,6 @@ def get_video(update, context):
     except:
         file_id = update.message.document.file_id
         input_type = update.message.document.mime_type[6:]
-
 
     chat_id = update.message.chat_id
     receiving_msg = context.bot.send_message(chat_id=chat_id, text="Video file detected. Preparing file...")
@@ -190,7 +189,8 @@ def show_help(update, context):
         .gif     |   .gif
         .avi     |   .avi
         .flv     |   .flv
-        .mov     |   .mov\n
+        .mov     |   .mov
+        .mkv     |   .mkv\n
     </pre>
     <b>Images:</b><pre>
         Input:   |   Output:
