@@ -88,7 +88,7 @@ The following section will guide you through setting up your own Simple Media Co
 * First, head over to [BotFather](https://t.me/BotFather) and create your own telegram bot with the /newbot command. After choosing an appropriate name and telegram handle for your bot, note down the bot token provided to you.
 * Next, cd to the directory of where you wish to store the project and clone this repository. An example is provided below:
 ```
-$ cd home/user/exampleuser/projects/
+$ cd /home/user/exampleuser/projects/
 $ git clone https://github.com/tjtanjin/simple-media-converter.git
 ```
 * Following which, create a config folder and within it, create a token.json file, saving the token you received from [BotFather](https://t.me/BotFather) as a value to the key "token" as shown below:
