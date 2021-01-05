@@ -99,6 +99,7 @@ $ git clone https://github.com/tjtanjin/simple-media-converter.git
 ```
 $ python3 main.py
 ```
+* If you wish to host your telegram bot online 24/7, do checkout the guide [here](https://gist.github.com/tjtanjin/ce560069506e3b6f4d70e570120249ed).
 
 ### Team
 * [Tan Jin](https://github.com/tjtanjin)
