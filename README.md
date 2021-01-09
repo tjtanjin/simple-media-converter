@@ -96,6 +96,11 @@ $ git clone https://github.com/tjtanjin/simple-media-converter.git
 {"token": "your bot token here"}
 ```
 * Finally, from the base directory of the project, execute the following command and the terminal should print "running..." if everything has been setup correctly!
+* You will also have to create 2 empty folders, input_media and output_media for processing users' sent files:
+```
+$ mkdir input_media
+$ mkdir output_media
+```
 ```
 $ python3 main.py
 ```
