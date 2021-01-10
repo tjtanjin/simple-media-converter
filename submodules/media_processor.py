@@ -32,5 +32,9 @@ def convert_image(chat_id, input_type, output_type):
 	img = Image.open('./input_media/{}.{}'.format(chat_id, input_type))
 	if output_type == "jpg" or ((input_type == "tiff" or input_type == "png") and output_type == "pdf"):
 		img = img.convert('RGB')
+	elif output_type == "ico":
+		icon_size = [(32, 32)]
+		img.save('./output_media/{}.{}'.format(chat_id, output_type), sizes=icon_size)
+		return None
 	img.save('./output_media/{}.{}'.format(chat_id, output_type), quality=95, optimize=True)
 	return None

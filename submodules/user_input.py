@@ -6,8 +6,8 @@ import os, re
 video_types = ["gif", "avi", "webm", "mp4", "flv", "mov", "mkv"]
 video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov", "x-matroska"]
 
-image_types = ["png", "jpg", "tiff", "pdf"]
-image_types_format_name = ["png", "jpg", "jpeg", "tiff"]
+image_types = ["png", "jpg", "tiff", "pdf", "ico"]
+image_types_format_name = ["png", "jpg", "jpeg", "tiff", "vnd.microsoft.icon"]
 
 sticker_types = ["png", "jpg", "tiff", "gif"]
 
@@ -197,6 +197,7 @@ def show_help(update, context):
         .png     |   .png
         .jpg     |   .jpg
         .tiff    |   .tiff
+        .ico     |   .ico
                  |   .pdf\n
     </pre>
     <b>Stickers:</b><pre>
