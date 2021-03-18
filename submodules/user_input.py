@@ -7,7 +7,7 @@ video_types = ["gif", "avi", "webm", "mp4", "flv", "mov", "mkv"]
 video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov", "x-matroska"]
 
 image_types = ["png", "jpg", "tiff", "pdf", "ico"]
-image_types_format_name = ["png", "jpg", "jpeg", "tiff", "vnd.microsoft.icon"]
+image_types_format_name = ["png", "jpg", "jpeg", "tiff", "vnd.microsoft.icon", "heif"]
 
 sticker_types = ["png", "jpg", "tiff", "gif"]
 
@@ -198,7 +198,7 @@ def show_help(update, context):
         .jpg     |   .jpg
         .tiff    |   .tiff
         .ico     |   .ico
-                 |   .pdf\n
+        .heif    |   .pdf\n
     </pre>
     <b>Stickers:</b><pre>
         Input:   |   Output:

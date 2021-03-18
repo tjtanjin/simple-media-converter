@@ -1,4 +1,4 @@
-import ffmpy, os
+import ffmpy, os, pyheif
 from PIL import Image
 
 def convert_video(chat_id, input_type, output_type):
@@ -29,7 +29,17 @@ def convert_image(chat_id, input_type, output_type):
 		input_type: video input type
 		output_type: video output type
 	"""
-	img = Image.open('./input_media/{}.{}'.format(chat_id, input_type))
+	if (input_type == "heif"):
+		heif_file = pyheif.read('./input_media/{}.{}'.format(chat_id, input_type))
+		img = Image.frombytes(
+		    heif_file.mode, 
+		    heif_file.size, 
+		    heif_file.data,
+		    "raw",
+		    heif_file.mode,
+		    heif_file.stride)
+	else:
+		img = Image.open('./input_media/{}.{}'.format(chat_id, input_type))
 	if output_type == "jpg" or ((input_type == "tiff" or input_type == "png") and output_type == "pdf"):
 		img = img.convert('RGB')
 	elif output_type == "ico":
