@@ -28,6 +28,7 @@ Simple Media Converter currently accepts 3 types of input (videos, images and te
 .avi
 .flv
 .mov
+.mkv
 ```
 ##### Videos Supported Output:
 ```
@@ -37,12 +38,15 @@ Simple Media Converter currently accepts 3 types of input (videos, images and te
 .avi
 .flv
 .mov
+.mkv
 ```
 ##### Images Supported Input:
 ```
 .png
 .jpg
 .tiff
+.heif
+.heic
 ```
 ##### Images Supported Output:
 ```
@@ -50,13 +54,16 @@ Simple Media Converter currently accepts 3 types of input (videos, images and te
 .jpg
 .tiff
 .pdf
+.webp
+.ico
 ```
-##### Telegram Stickers Output:
+##### Static Telegram Stickers Output:
 ```
-.png
-.jpg
-.tiff
-.gif
+All Output Image Types Supported Above
+```
+##### Animated Telegram Stickers Output:
+```
+All Output Image/Video Types Supported Above
 ```
 
 ### Technologies
@@ -91,7 +98,7 @@ The following section will guide you through setting up your own Simple Media Co
 $ cd /home/user/exampleuser/projects/
 $ git clone https://github.com/tjtanjin/simple-media-converter.git
 ```
-* Following which, create a config folder and within it, create a token.json file, saving the token you received from [BotFather](https://t.me/BotFather) as a value to the key "token" as shown below:
+* Following which, create a `config` folder and within it, create a `token.json` file, saving the token you received from [BotFather](https://t.me/BotFather) as a value to the key "token" as shown below:
 ```
 {"token": "your bot token here"}
 ```
@@ -99,6 +106,14 @@ $ git clone https://github.com/tjtanjin/simple-media-converter.git
 ```
 $ mkdir input_media
 $ mkdir output_media
+```
+* Then, add a `.env` file containing the supported video/image types. An example is shown below:
+```
+# supported video types
+VIDEO_TYPES=["gif", "avi", "webm", "mp4", "flv", "mov", "mkv"]
+
+# supported image types
+IMAGE_TYPES=["png", "jpg", "tiff", "webp", "pdf", "ico"]
 ```
 * Finally, from the base directory of the project, execute the following command and the terminal should print "running..." if everything has been setup correctly!
 ```
