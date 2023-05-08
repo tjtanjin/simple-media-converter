@@ -107,14 +107,6 @@ $ git clone https://github.com/tjtanjin/simple-media-converter.git
 $ mkdir input_media
 $ mkdir output_media
 ```
-* Then, add a `.env` file containing the supported output video/image types. An example is shown below:
-```
-# supported output video types
-VIDEO_TYPES=["gif", "avi", "webm", "mp4", "flv", "mov", "mkv"]
-
-# supported output image types
-IMAGE_TYPES=["png", "jpg", "tiff", "webp", "pdf", "ico"]
-```
 * Finally, from the base directory of the project, execute the following command and the terminal should print "running..." if everything has been setup correctly!
 ```
 $ python3 main.py
