@@ -1,5 +1,12 @@
-import ffmpy, os, pyheif
+import ffmpy, os, pyheif, json
+from rlottie_python import LottieAnimation
 from PIL import Image
+
+# used to handle support lottie conversion types from telegram stickers
+lottie_supported_types = ["png", "tiff", "pdf", "webp", "gif"]
+
+# used to handle supported videos/images types
+video_types = json.loads(os.getenv("VIDEO_TYPES"))
 
 def convert_video(chat_id, input_type, output_type):
 	"""
@@ -19,6 +26,35 @@ def convert_video(chat_id, input_type, output_type):
 	    outputs=outputs
 	)
 	ff.run()
+	return None
+
+def convert_sticker(chat_id, input_type, output_type):
+	"""
+	The function converts video of one type to another.
+	Args:
+		chat_id: unique identification for video
+		input_type: video input type
+		output_type: video output type
+	"""
+	try:
+		if output_type in lottie_supported_types:
+			anim = LottieAnimation.from_tgs('./input_media/{}.{}'.format(chat_id, input_type))
+			anim.save_animation('./output_media/{}.{}'.format(chat_id, output_type))
+			return None
+	
+		if output_type in video_types:
+			anim = LottieAnimation.from_tgs('./input_media/{}.{}'.format(chat_id, input_type))
+			anim.save_animation('./input_media/{}.{}'.format(chat_id, "gif"))
+			convert_video(chat_id, "gif", output_type)
+			os.remove("./input_media/{}.{}".format(chat_id, "gif"))
+		else:
+			anim = LottieAnimation.from_tgs('./input_media/{}.{}'.format(chat_id, input_type))
+			anim.save_animation('./input_media/{}.{}'.format(chat_id, "png"))
+			convert_image(chat_id, "png", output_type)
+			os.remove("./input_media/{}.{}".format(chat_id, "png"))
+	except:
+		# if all else fails, convert sticker straight to image type
+		convert_image(chat_id, "tgs", output_type)
 	return None
 
 def convert_image(chat_id, input_type, output_type):

@@ -1,23 +1,26 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackQueryHandler, Filters
+import os, json
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters
 from submodules import user_input as ui
-import json
 
 def main():
 	print("Running...")
 	with open("./config/token.json", "r") as file:
 		token = json.load(file)["token"]
-	updater = Updater(token, use_context=True, workers=4)
-	dp = updater.dispatcher
-	dp.add_handler(CommandHandler('start', ui.start))
-	dp.add_handler(CommandHandler('help', ui.show_help))
-	dp.add_handler(MessageHandler(Filters.document, ui.get_document))
-	dp.add_handler(MessageHandler(Filters.photo, ui.get_photo))
-	dp.add_handler(MessageHandler(Filters.video, ui.get_video))
-	dp.add_handler(MessageHandler(Filters.sticker, ui.get_sticker))
-	dp.add_handler(CallbackQueryHandler(ui.output_photo_type, pattern='photo_(\S+)_(\S+)'))
-	dp.add_handler(CallbackQueryHandler(ui.output_video_type, pattern='video_(\S+)_(\S+)'))
-	updater.start_polling()
-	updater.idle()
+	application = Application.builder().token(token).build()
+	application.add_handler(CommandHandler('start', ui.start))
+	application.add_handler(CommandHandler('help', ui.show_help))
+	application.add_handler(MessageHandler(filters.Document.ALL, ui.get_document))
+	application.add_handler(MessageHandler(filters.PHOTO, ui.get_photo))
+	application.add_handler(MessageHandler(filters.VIDEO, ui.get_video))
+	application.add_handler(MessageHandler(filters.Sticker.ALL, ui.get_sticker))
+	application.add_handler(CallbackQueryHandler(ui.output_photo_type, pattern='photo_(\S+)_(\S+)'))
+	application.add_handler(CallbackQueryHandler(ui.output_video_type, pattern='video_(\S+)_(\S+)'))
+	application.add_handler(CallbackQueryHandler(ui.output_sticker_type, pattern='sticker_(\S+)_(\S+)'))
+	application.run_polling()
 
 if __name__ == '__main__':
 	main()
