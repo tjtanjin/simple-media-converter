@@ -31,9 +31,9 @@ async def get_document(update, context):
     """
     input_type = update.message.document.mime_type[6:]
     if input_type in video_types_format_name:
-        get_video(update, context)
+        await get_video(update, context)
     elif input_type in image_types_format_name:
-        get_photo(update, context)
+        await get_photo(update, context)
     else:
         await update.message.reply_text("Unsupported file uploaded. Do /help to see supported file formats.")
     return None
