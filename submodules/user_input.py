@@ -235,6 +235,7 @@ async def show_help(update, context):
         .png     |   .png
         .jpg     |   .jpg
         .tiff    |   .tiff
+        .webp    |   .webp
         .ico     |   .ico
         .heif    |   .pdf\n
     </pre>
