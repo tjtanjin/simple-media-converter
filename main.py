@@ -10,7 +10,7 @@ def main():
 	print("Running...")
 	with open("./config/token.json", "r") as file:
 		token = json.load(file)["token"]
-	application = Application.builder().token(token).build()
+	application = Application.builder().token(token).read_timeout(30).write_timeout(30).build()
 	application.add_handler(CommandHandler('start', ui.start))
 	application.add_handler(CommandHandler('help', ui.show_help))
 	application.add_handler(MessageHandler(filters.Document.ALL, ui.get_document))
