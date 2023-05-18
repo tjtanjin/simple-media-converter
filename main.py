@@ -1,4 +1,4 @@
-import os, json
+import os
 from dotenv import load_dotenv
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -7,9 +7,8 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 from submodules import user_input as ui
 
 def main():
-	print("Running...")
-	with open("./config/token.json", "r") as file:
-		token = json.load(file)["token"]
+	print("Simple Media Converter instance started!")
+	token = os.getenv("BOT_TOKEN")
 	application = Application.builder().token(token).read_timeout(30).write_timeout(30).build()
 	application.add_handler(CommandHandler('start', ui.start))
 	application.add_handler(CommandHandler('help', ui.show_help))
