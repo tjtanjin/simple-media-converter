@@ -1,6 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# media folders
 /input_media
 /output_media
-/media
 
+# editors
 .idea/
+
+# env vars
 .env
