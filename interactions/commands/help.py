@@ -40,4 +40,4 @@ async def execute(update, context):
         Telegram |   Supported
         Sticker  |   Images/Videos
     </pre>
-Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!""", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!""", parse_mode=ParseMode.HTML)
