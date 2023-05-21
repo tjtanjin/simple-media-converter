@@ -13,17 +13,16 @@ def build_menu(buttons, header_buttons=None, footer_buttons=None):
     return menu
 
 
-def show_conversion_options(n_rows, text, media_type, input_type):
+def show_conversion_options(text, media_type, input_type):
     """
     Generates conversion option buttons for users from a list of button texts and callback data.
     Args:
-        n_rows: rows for button
         text: list of texts to show
         media_type: currently supports videos and images
         input_type: format of video
     """
     button_list = []
-    for i in range(0, n_rows):
+    for i in range(0, len(text)):
         button_list.append([InlineKeyboardButton(text[i], callback_data=media_type + "_" + input_type + "_" + text[i])])
 
     # append a final cancel button for users to cancel conversion

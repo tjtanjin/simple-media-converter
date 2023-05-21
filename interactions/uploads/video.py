@@ -50,7 +50,7 @@ async def process_upload_as_video(context, chat_id, file_id, input_type):
     new_file = await context.bot.get_file(file_id)
     with open(f"./input_media/{chat_id}.{input_type}", "wb") as file:
         await new_file.download_to_memory(file)
-    reply_markup = show_conversion_options(len(VIDEO_TYPES), VIDEO_TYPES, "video", input_type)
+    reply_markup = show_conversion_options(VIDEO_TYPES, "video", input_type)
     await update_message(receiving_msg, "Please select the file type to convert to:", markup=reply_markup)
 
 

@@ -37,9 +37,9 @@ async def get_uploaded_sticker(update, context):
     with open(f"./input_media/{chat_id}.{input_type}", "wb") as file:
         await new_file.download_to_memory(file)
     if update.message.sticker.is_animated:
-        reply_markup = show_conversion_options(len(STICKER_TYPES), STICKER_TYPES, "sticker", input_type)
+        reply_markup = show_conversion_options(STICKER_TYPES, "sticker", input_type)
     else:
-        reply_markup = show_conversion_options(len(IMAGE_TYPES), IMAGE_TYPES, "sticker", input_type)
+        reply_markup = show_conversion_options(IMAGE_TYPES, "sticker", input_type)
     await update_message(receiving_msg, "Please select the file type to convert to:", markup=reply_markup)
     return 1
 

@@ -8,6 +8,9 @@ from interactions.loader import load_interactions
 
 
 def main():
+	"""
+	Handles the initial launch of the program (entry point).
+	"""
 	token = os.getenv("BOT_TOKEN")
 	application = Application.builder().token(token).read_timeout(30).write_timeout(30).build()
 	load_interactions(application)
