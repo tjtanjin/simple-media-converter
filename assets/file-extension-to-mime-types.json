@@ -15,6 +15,9 @@
         "mov": "mov",
         "flv": "x-flv",
         "avi": "x-msvideo",
-        "mkv": "x-matroska"
+        "mkv": "x-matroska",
+        "wmv": "x-ms-wmv",
+        "mpg": "mpeg",
+        "mpeg": "mpeg"
     }
 }
