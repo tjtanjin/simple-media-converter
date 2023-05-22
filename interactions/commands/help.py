@@ -129,7 +129,7 @@ def sticker_conversion_supported():
     """
     Checks if sticker conversion is supported.
     """
-    return len(STICKER_INPUT_TYPES) > 0 and (len(IMAGE_OUTPUT_TYPES > 0 or len(VIDEO_OUTPUT_TYPES > 0)))
+    return len(STICKER_INPUT_TYPES) > 0 and (len(IMAGE_OUTPUT_TYPES) > 0 or len(VIDEO_OUTPUT_TYPES > 0))
 
 
 help_message = build_help_message()
