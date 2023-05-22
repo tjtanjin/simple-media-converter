@@ -2,13 +2,13 @@ import os
 
 from telegram.ext import ConversationHandler
 
-from services.conversion_service import purge_user_media
+from services.media_service import purge_user_media
 from services.message_service import send_message
 
 try:
     TIMEOUT_DURATION = int(os.getenv("INTERACTION_TIMEOUT_DURATION"))
 except ValueError:
-    TIMEOUT_DURATION = 300
+    TIMEOUT_DURATION = 180
 
 
 async def handle_interaction_cancel(update, context):
@@ -37,3 +37,17 @@ async def handle_interaction_timeout(update, context):
     purge_user_media("./output_media/", chat_id)
     await send_message(context, chat_id, "It seems you are no longer interested :( Hope to see you again!")
     return ConversationHandler.END
+
+
+async def handle_interaction_not_allowed(update, context):
+    """
+    Handles logic for when a user performs an action not allowed during an interaction (e.g. uploading another file
+    while there is an existing prompt).
+    Args:
+        update: default telegram arg
+        context: default telegram arg
+    """
+    chat_id = update.message.chat_id
+    await context.bot.delete_message(chat_id, update.message.message_id)
+    await send_message(context, chat_id, "You have an uploaded file pending, please wait or cancel your existing "
+                                         "attempt first!")

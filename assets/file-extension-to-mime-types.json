@@ -1,0 +1,20 @@
+{
+    "image": {
+        "png": "png",
+        "jpg": "jpeg",
+        "jpeg": "jpeg",
+        "tiff": "tiff",
+        "webp": "webp",
+        "ico": "vnd.microsoft.icon",
+        "heif": "heif"
+    },
+    "video": {
+        "mp4": "mp4",
+        "gif": "gif",
+        "webm": "webm",
+        "mov": "quicktime",
+        "flv": "x-flv",
+        "avi": "x-msvideo",
+        "mkv": "x-matroska"
+    }
+}

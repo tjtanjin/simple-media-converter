@@ -2,12 +2,10 @@ from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandl
 
 from interactions.uploads.image import handle_image_output, process_upload_as_image
 from interactions.uploads.video import handle_video_output, process_upload_as_video
-from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel
+from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
+    handle_interaction_not_allowed
+from services.media_service import DOCUMENT_IMAGE_INPUT_TYPES, DOCUMENT_VIDEO_INPUT_TYPES
 from services.message_service import reply
-
-# supported media types sent as documents
-video_types_format_name = ["gif", "x-msvideo", "webm", "mp4", "x-flv", "mov", "x-matroska"]
-image_types_format_name = ["png", "jpg", "jpeg", "tiff", "webp", "vnd.microsoft.icon", "heif"]
 
 
 def handle_document_input():
@@ -21,7 +19,10 @@ def handle_document_input():
             2: [CallbackQueryHandler(handle_image_output, pattern='image_(\S+)_(\S+)')],
             ConversationHandler.TIMEOUT: [MessageHandler(filters.ALL, handle_interaction_timeout)]
         },
-        fallbacks=[CallbackQueryHandler(handle_interaction_cancel, pattern='cancel')],
+        fallbacks=[
+            CallbackQueryHandler(handle_interaction_cancel, pattern='cancel'),
+            MessageHandler(filters.ALL & (~filters.COMMAND), handle_interaction_not_allowed)
+        ],
         conversation_timeout=TIMEOUT_DURATION
     )
 
@@ -36,10 +37,10 @@ async def get_uploaded_document(update, context):
     chat_id = update.message.chat_id
     file_id = update.message.document.file_id
     input_type = update.message.document.mime_type[6:]
-    if input_type in video_types_format_name:
+    if input_type in DOCUMENT_VIDEO_INPUT_TYPES:
         await process_upload_as_video(context, chat_id, file_id, input_type)
         return 1
-    elif input_type in image_types_format_name:
+    elif input_type in DOCUMENT_IMAGE_INPUT_TYPES:
         await process_upload_as_image(context, chat_id, file_id, input_type)
         return 2
     else:

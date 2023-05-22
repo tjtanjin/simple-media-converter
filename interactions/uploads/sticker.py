@@ -1,8 +1,10 @@
 from telegram.constants import ParseMode
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
 
-from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel
-from services.conversion_service import IMAGE_TYPES, STICKER_TYPES, convert_sticker, input_media_exist, clean_up_media
+from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
+    handle_interaction_not_allowed
+from services.conversion_service import convert_sticker
+from services.media_service import IMAGE_OUTPUT_TYPES, STICKER_TYPES, input_media_exist, clean_up_media
 from services.message_service import update_message, send_document, send_message
 from ui.builder import show_conversion_options
 
@@ -17,7 +19,10 @@ def handle_sticker_input():
             1: [CallbackQueryHandler(handle_sticker_output, pattern='sticker_(\S+)_(\S+)')],
             ConversationHandler.TIMEOUT: [MessageHandler(filters.ALL, handle_interaction_timeout)]
         },
-        fallbacks=[CallbackQueryHandler(handle_interaction_cancel, pattern='cancel')],
+        fallbacks=[
+            CallbackQueryHandler(handle_interaction_cancel, pattern='cancel'),
+            MessageHandler(filters.ALL & (~filters.COMMAND), handle_interaction_not_allowed)
+        ],
         conversation_timeout=TIMEOUT_DURATION
     )
 
@@ -39,7 +44,7 @@ async def get_uploaded_sticker(update, context):
     if update.message.sticker.is_animated:
         reply_markup = show_conversion_options(STICKER_TYPES, "sticker", input_type)
     else:
-        reply_markup = show_conversion_options(IMAGE_TYPES, "sticker", input_type)
+        reply_markup = show_conversion_options(IMAGE_OUTPUT_TYPES, "sticker", input_type)
     await update_message(receiving_msg, "Please select the file type to convert to:", markup=reply_markup)
     return 1
 

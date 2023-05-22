@@ -1,8 +1,10 @@
 from telegram.constants import ParseMode
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
 
-from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel
-from services.conversion_service import VIDEO_TYPES, convert_video, input_media_exist, clean_up_media
+from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
+    handle_interaction_not_allowed
+from services.conversion_service import convert_video
+from services.media_service import VIDEO_OUTPUT_TYPES, input_media_exist, clean_up_media, VIDEO_INPUT_TYPES
 from services.message_service import update_message, send_document, send_message
 from ui.builder import show_conversion_options
 
@@ -17,7 +19,10 @@ def handle_video_input():
             1: [CallbackQueryHandler(handle_video_output, pattern='video_(\S+)_(\S+)')],
             ConversationHandler.TIMEOUT: [MessageHandler(filters.ALL, handle_interaction_timeout)]
         },
-        fallbacks=[CallbackQueryHandler(handle_interaction_cancel, pattern='cancel')],
+        fallbacks=[
+            CallbackQueryHandler(handle_interaction_cancel, pattern='cancel'),
+            MessageHandler(filters.ALL & (~filters.COMMAND), handle_interaction_not_allowed)
+        ],
         conversation_timeout=TIMEOUT_DURATION
     )
 
@@ -30,9 +35,12 @@ async def get_uploaded_video(update, context):
         context: default telegram arg
     """
     file_id = update.message.video.file_id
-    input_type = update.message.video.mime_type[6:]
-
     chat_id = update.message.chat_id
+    input_type = update.message.video.mime_type[6:]
+    if input_type not in VIDEO_INPUT_TYPES:
+        await send_message(context, chat_id, "Unsupported file uploaded. Do /help to see supported file formats.")
+        return ConversationHandler.END
+
     await process_upload_as_video(context, chat_id, file_id, input_type)
     return 1
 
@@ -50,7 +58,7 @@ async def process_upload_as_video(context, chat_id, file_id, input_type):
     new_file = await context.bot.get_file(file_id)
     with open(f"./input_media/{chat_id}.{input_type}", "wb") as file:
         await new_file.download_to_memory(file)
-    reply_markup = show_conversion_options(VIDEO_TYPES, "video", input_type)
+    reply_markup = show_conversion_options(VIDEO_OUTPUT_TYPES, "video", input_type)
     await update_message(receiving_msg, "Please select the file type to convert to:", markup=reply_markup)
 
 

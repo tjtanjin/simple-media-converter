@@ -1,8 +1,10 @@
 from telegram.constants import ParseMode
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
 
-from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel
-from services.conversion_service import IMAGE_TYPES, convert_image, input_media_exist, clean_up_media
+from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
+    handle_interaction_not_allowed
+from services.conversion_service import convert_image
+from services.media_service import IMAGE_OUTPUT_TYPES, input_media_exist, clean_up_media, IMAGE_INPUT_TYPES
 from services.message_service import send_message, update_message, send_document
 from ui.builder import show_conversion_options
 
@@ -17,7 +19,10 @@ def handle_image_input():
             1: [CallbackQueryHandler(handle_image_output, pattern='image_(\S+)_(\S+)')],
             ConversationHandler.TIMEOUT: [MessageHandler(filters.ALL, handle_interaction_timeout)]
         },
-        fallbacks=[CallbackQueryHandler(handle_interaction_cancel, pattern='cancel')],
+        fallbacks=[
+            CallbackQueryHandler(handle_interaction_cancel, pattern='cancel'),
+            MessageHandler(filters.ALL & (~filters.COMMAND), handle_interaction_not_allowed)
+        ],
         conversation_timeout=TIMEOUT_DURATION
     )
 
@@ -31,11 +36,17 @@ async def get_uploaded_image(update, context):
     """
     chat_id = update.message.chat_id
     file_id = update.message.photo[-1].file_id
-    await send_message(context, chat_id, "You sent your image as a photo. If you run into conversion issues, "
-                                         "try sending your image as a file instead.")
+
+    # images sent to telegram are by default received as jpg so a specific check is done here
+    if "jpg" not in IMAGE_INPUT_TYPES:
+        await send_message(context, chat_id, "Unsupported file uploaded. Do /help to see supported file formats.")
+        return ConversationHandler.END
 
     # if sent as photo, no way to detect file name to parse type - hence defaults to jpg and users are encouraged to
     # send images as a file if conversion result is less than desirable
+    await send_message(context, chat_id, "You sent your image as a photo. If you run into conversion issues, "
+                                         "try sending your image as a file instead.")
+
     await process_upload_as_image(context, chat_id, file_id, "jpg")
     return 1
 
@@ -53,7 +64,7 @@ async def process_upload_as_image(context, chat_id, file_id, input_type):
     new_file = await context.bot.get_file(file_id)
     with open(f"./input_media/{chat_id}.{input_type}", "wb") as file:
         await new_file.download_to_memory(file)
-    reply_markup = show_conversion_options(IMAGE_TYPES, "image", input_type)
+    reply_markup = show_conversion_options(IMAGE_OUTPUT_TYPES, "image", input_type)
     await update_message(receiving_msg, "Please select the file type to convert to:", markup=reply_markup)
 
 
