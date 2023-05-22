@@ -11,7 +11,7 @@ IMAGE_OUTPUT_TYPES = json.loads(os.getenv("IMAGE_OUTPUT_TYPES"))
 VIDEO_OUTPUT_TYPES = json.loads(os.getenv("VIDEO_OUTPUT_TYPES"))
 STICKER_TYPES = VIDEO_OUTPUT_TYPES + IMAGE_OUTPUT_TYPES  # sticker outputs to either image/video
 
-# used to handle document uploads (fields auto-generated from supported image/video input types to mime types)
+# used to handle mime type checks on upload (fields auto-generated from supported image/video input types to mime types)
 with open("./assets/file-extension-to-mime-types.json", "r") as file:
     mimetypes = json.load(file)
 DOCUMENT_IMAGE_INPUT_TYPES = list(map(lambda input_type: mimetypes["image"][input_type], IMAGE_INPUT_TYPES))

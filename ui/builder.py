@@ -35,9 +35,9 @@ def show_conversion_options(text, media_type, input_type):
 
 async def show_animated_loader(message):
     """
-    Function that provides loading animation during code execution.
+    Provides loading animation during media conversions.
     Args:
-        message: message to edit
+        message: message to edit to show loader
     """
     await update_message(message, text=message.text + " /", )
     await update_message(message, text=message.text + " -")

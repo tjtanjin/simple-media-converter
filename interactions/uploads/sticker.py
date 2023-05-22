@@ -54,7 +54,7 @@ async def get_uploaded_sticker(update, context):
 
 async def handle_sticker_output(update, context):
     """
-    This function triggers upon user's selection of desired output sticker type.
+    Performs conversion upon user's selection of desired output sticker type and returns the final result.
     Args:
         update: default telegram arg
         context: default telegram arg
