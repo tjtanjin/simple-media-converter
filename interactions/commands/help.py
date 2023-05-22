@@ -1,5 +1,6 @@
 from telegram.constants import ParseMode
 
+from services.media_service import IMAGE_INPUT_TYPES, IMAGE_OUTPUT_TYPES, VIDEO_INPUT_TYPES, VIDEO_OUTPUT_TYPES
 from services.message_service import reply
 
 
@@ -10,34 +11,101 @@ async def execute(update, context):
         update: default telegram arg
         context: default telegram arg
     """
-    await reply(update, """Here are the currently available conversion types:\n
-    <b>Videos:</b><pre>
-        Input:   |   Output:
-        .mp4     |   .mp4
-        .webm    |   .webm
-        .gif     |   .gif
-        .avi     |   .avi
-        .flv     |   .flv
-        .mov     |   .mov
-        .mkv     |   .mkv\n
-    </pre>
-    <b>Images:</b><pre>
-        Input:   |   Output:
-        .png     |   .png
-        .jpg     |   .jpg
-        .tiff    |   .tiff
-        .webp    |   .webp
-        .ico     |   .ico
-        .heif    |   .pdf\n
-    </pre>
-    <b>Stickers:</b><pre>
-        Input:   |   Output:
-        Static   |   All
-        Telegram |   Supported
-        Sticker  |   Images
-                 |
-        Animated |   All
-        Telegram |   Supported
-        Sticker  |   Images/Videos
-    </pre>
-Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href="https://github.com/tjtanjin/simple-media-converter">Project Repository</a>!""", parse_mode=ParseMode.HTML)
+    await reply(update, help_message, parse_mode=ParseMode.HTML)
+
+
+def build_help_message():
+    """
+    Builds the help message based on allowed input/output types.
+    """
+    message = "Here are the currently available conversion types:\n\n"
+
+    # checks if image conversion is supported
+    if image_conversion_supported():
+        message += "<b>Videos:</b><pre>\n" + "   Input:   |   Output:\n"
+        message += build_types_body(
+            list(map(lambda x: "." + x, IMAGE_INPUT_TYPES)),
+            list(map(lambda x: "." + x, IMAGE_OUTPUT_TYPES))
+        )
+        message += "</pre>\n"
+
+    # checks if video conversion is supported
+    if video_conversion_supported():
+        message += "<b>Videos:</b><pre>\n" + "   Input:   |   Output:\n"
+        message += build_types_body(
+            list(map(lambda x: "." + x, VIDEO_INPUT_TYPES)),
+            list(map(lambda x: "." + x, VIDEO_OUTPUT_TYPES))
+        )
+        message += "</pre>\n"
+
+    # checks if sticker conversion is supported
+    if image_conversion_supported() or video_conversion_supported():
+        message += "<b>Stickers:</b><pre>\n" + "   Input:   |   Output:\n"
+        message += build_types_body("Static Telegram Sticker".split(" "), "All Supported Images".split(" "))
+        message += "            |            \n"
+        message += build_types_body("Animated Telegram Sticker".split(" "), "All Supported Images/Videos".split(" "))
+        message += "</pre>\n"
+
+    message += "Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href='https://github.com/tjtanjin/simple-media-converter'>Project Repository</a>!"
+    return message
+
+
+def build_types_body(input_array, output_array):
+    """
+    Builds the body of the message that lists the allowed input/output types.
+    Args:
+        input_array: list of allowed inputs
+        output_array: list of allowed outputs
+    """
+    parsed_input = list(map(pad_input, input_array))
+    parsed_output = list(map(pad_output, output_array))
+    input_num = len(parsed_input)
+    output_num = len(parsed_output)
+    if input_num > output_num:
+        while input_num > len(parsed_output):
+            parsed_output.append("")
+    else:
+        while output_num > len(parsed_input):
+            parsed_input.append("         ")
+    body = ""
+    for i in range(0, len(parsed_input)):
+        body += parsed_input[i] + "|" + parsed_output[i] + "\n"
+
+    return body
+
+
+def pad_input(string):
+    """
+    Pads the allowed input type for formatting.
+    Args:
+        string: string to pad
+    """
+    string = "   " + string
+    return string.ljust(12)[:12]
+
+
+def pad_output(string):
+    """
+    Pads the allowed output type for formatting.
+    Args:
+        string: string to pad
+    """
+    string = "   " + string
+    return string[:12]
+
+
+def image_conversion_supported():
+    """
+    Checks if image conversion is supported.
+    """
+    return len(IMAGE_INPUT_TYPES) > 0 and len(IMAGE_OUTPUT_TYPES) > 0
+
+
+def video_conversion_supported():
+    """
+    Checks if video conversion is supported.
+    """
+    return len(VIDEO_INPUT_TYPES) > 0 and len(VIDEO_OUTPUT_TYPES) > 0
+
+
+help_message = build_help_message()
