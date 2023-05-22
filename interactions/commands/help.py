@@ -2,7 +2,8 @@ import i18n
 
 from telegram.constants import ParseMode
 
-from services.media_service import IMAGE_INPUT_TYPES, IMAGE_OUTPUT_TYPES, VIDEO_INPUT_TYPES, VIDEO_OUTPUT_TYPES
+from services.media_service import IMAGE_INPUT_TYPES, IMAGE_OUTPUT_TYPES, VIDEO_INPUT_TYPES, VIDEO_OUTPUT_TYPES, \
+    STICKER_INPUT_TYPES
 from services.message_service import reply
 
 
@@ -43,7 +44,7 @@ def build_help_message():
         message += "</pre>\n"
 
     # checks if sticker conversion is supported
-    if image_conversion_supported() or video_conversion_supported():
+    if sticker_conversion_supported():
         message += "<b>" + i18n.t("misc.stickers") + ":</b><pre>\n"
         message += build_types_body([i18n.t("misc.input") + ":"], [i18n.t("misc.output") + ":"]) + "\n"
         message += build_types_body(
@@ -122,6 +123,13 @@ def video_conversion_supported():
     Checks if video conversion is supported.
     """
     return len(VIDEO_INPUT_TYPES) > 0 and len(VIDEO_OUTPUT_TYPES) > 0
+
+
+def sticker_conversion_supported():
+    """
+    Checks if sticker conversion is supported.
+    """
+    return len(STICKER_INPUT_TYPES) > 0 and (len(IMAGE_OUTPUT_TYPES > 0 or len(VIDEO_OUTPUT_TYPES > 0)))
 
 
 help_message = build_help_message()

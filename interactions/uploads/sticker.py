@@ -7,7 +7,8 @@ from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandl
 from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
     handle_interaction_not_allowed
 from services.conversion_service import convert_sticker
-from services.media_service import IMAGE_OUTPUT_TYPES, STICKER_TYPES, input_media_exist, clean_up_media
+from services.media_service import IMAGE_OUTPUT_TYPES, STICKER_OUTPUT_TYPES, input_media_exist, clean_up_media, \
+    STICKER_INPUT_TYPES
 from services.message_service import update_message, send_document, send_message, parse_placeholders
 from ui.builder import show_conversion_options, show_animated_loader
 
@@ -40,12 +41,18 @@ async def get_uploaded_sticker(update, context):
     file_id = update.message.sticker.file_id
     input_type = "tgs"
     chat_id = update.message.chat_id
+
+    # telegram stickers all default to tgs type so a specific check is done here to see if stickers are supported
+    if input_type not in STICKER_INPUT_TYPES:
+        await send_message(context, chat_id, i18n.t("interaction.file_not_supported"))
+        return ConversationHandler.END
+
     receiving_msg = await send_message(context, chat_id, i18n.t("sticker.detected"))
     new_file = await context.bot.get_file(file_id)
     with open(f"./input_media/{chat_id}.{input_type}", "wb") as file:
         await new_file.download_to_memory(file)
     if update.message.sticker.is_animated:
-        reply_markup = show_conversion_options(STICKER_TYPES, "sticker", input_type)
+        reply_markup = show_conversion_options(STICKER_OUTPUT_TYPES, "sticker", input_type)
     else:
         reply_markup = show_conversion_options(IMAGE_OUTPUT_TYPES, "sticker", input_type)
     await update_message(receiving_msg, i18n.t("interaction.prompt_selection"), markup=reply_markup)
