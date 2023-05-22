@@ -71,9 +71,10 @@ async def handle_sticker_output(update, context):
             await send_message(context, chat_id, i18n.t("interaction.file_not_found"))
             return ConversationHandler.END
 
-        processing_msg = await send_message(context, chat_id, parse_placeholders(i18n.t("conversion.in_progress"),
-                                                                                 ["%input_type%", "%output_type%"],
-                                                                                 [input_type, output_type]))
+        selection_msg = update.callback_query.message
+        processing_msg = await update_message(selection_msg, parse_placeholders(i18n.t("conversion.in_progress"),
+                                                                                    ["%input_type%", "%output_type%"],
+                                                                                    [input_type, output_type]))
         conversion_process = threading.Thread(target=convert_sticker, args=(chat_id, input_type, output_type))
         conversion_process.start()
         while conversion_process.isAlive():
@@ -83,9 +84,8 @@ async def handle_sticker_output(update, context):
                                                                 [input_type, output_type]))
         await send_document(context, chat_id, f"./output_media/{chat_id}.{output_type}", i18n.t("conversion.send_file"))
     # throw error on failure
-    except Exception as ex:
-        await update_message(processing_msg, i18n.t("misc.error"), parse_mode=ParseMode.HTML)
-        print(ex)
+    except (Exception,):
+        await update_message(selection_msg, i18n.t("misc.error"), parse_mode=ParseMode.HTML)
     # remove all media files at the end
     finally:
         clean_up_media(chat_id, input_type, output_type)

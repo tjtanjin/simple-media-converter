@@ -4,7 +4,7 @@ import os
 from telegram.ext import ConversationHandler
 
 from services.media_service import purge_user_media
-from services.message_service import send_message
+from services.message_service import send_message, update_message
 
 try:
     TIMEOUT_DURATION = int(os.getenv("INTERACTION_TIMEOUT_DURATION"))
@@ -22,7 +22,7 @@ async def handle_interaction_cancel(update, context):
     await context.bot.answer_callback_query(update.callback_query.id)
     chat_id = update.callback_query.message.chat.id
     purge_user_media("./input_media/", chat_id)
-    await send_message(context, chat_id, i18n.t("interaction.cancelled"))
+    await update_message(update.callback_query.message, i18n.t("interaction.cancelled"))
     return ConversationHandler.END
 
 
