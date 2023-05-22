@@ -1,3 +1,5 @@
+import i18n
+
 from telegram.constants import ParseMode
 
 from services.media_service import IMAGE_INPUT_TYPES, IMAGE_OUTPUT_TYPES, VIDEO_INPUT_TYPES, VIDEO_OUTPUT_TYPES
@@ -18,11 +20,12 @@ def build_help_message():
     """
     Builds the help message based on allowed input/output types.
     """
-    message = "Here are the currently available conversion types:\n\n"
+    message = i18n.t("help.header") + ":\n\n"
 
     # checks if image conversion is supported
     if image_conversion_supported():
-        message += "<b>Videos:</b><pre>\n" + "   Input:   |   Output:\n"
+        message += "<b>" + i18n.t("misc.images") + ":</b><pre>\n"
+        message += build_types_body([i18n.t("misc.input") + ":"], [i18n.t("misc.output") + ":"]) + "\n"
         message += build_types_body(
             list(map(lambda x: "." + x, IMAGE_INPUT_TYPES)),
             list(map(lambda x: "." + x, IMAGE_OUTPUT_TYPES))
@@ -31,7 +34,8 @@ def build_help_message():
 
     # checks if video conversion is supported
     if video_conversion_supported():
-        message += "<b>Videos:</b><pre>\n" + "   Input:   |   Output:\n"
+        message += "<b>" + i18n.t("misc.videos") + ":</b><pre>\n"
+        message += build_types_body([i18n.t("misc.input") + ":"], [i18n.t("misc.output") + ":"]) + "\n"
         message += build_types_body(
             list(map(lambda x: "." + x, VIDEO_INPUT_TYPES)),
             list(map(lambda x: "." + x, VIDEO_OUTPUT_TYPES))
@@ -40,13 +44,20 @@ def build_help_message():
 
     # checks if sticker conversion is supported
     if image_conversion_supported() or video_conversion_supported():
-        message += "<b>Stickers:</b><pre>\n" + "   Input:   |   Output:\n"
-        message += build_types_body("Static Telegram Sticker".split(" "), "All Supported Images".split(" "))
+        message += "<b>" + i18n.t("misc.stickers") + ":</b><pre>\n"
+        message += build_types_body([i18n.t("misc.input") + ":"], [i18n.t("misc.output") + ":"]) + "\n"
+        message += build_types_body(
+            [i18n.t("misc.static"), i18n.t("misc.telegram"), i18n.t("misc.stickers")],
+            [i18n.t("misc.all"), i18n.t("misc.supported"), i18n.t("misc.images")]
+        )
         message += "            |            \n"
-        message += build_types_body("Animated Telegram Sticker".split(" "), "All Supported Images/Videos".split(" "))
+        message += build_types_body(
+            [i18n.t("misc.animated"), i18n.t("misc.telegram"), i18n.t("misc.stickers")],
+            [i18n.t("misc.all"), i18n.t("misc.supported"), i18n.t("misc.images") + "/" + i18n.t("misc.videos")]
+        )
         message += "</pre>\n"
 
-    message += "Drop a video or image to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the <a href='https://github.com/tjtanjin/simple-media-converter'>Project Repository</a>!"
+    message += i18n.t("help.footer")
     return message
 
 
@@ -81,7 +92,13 @@ def pad_input(string):
         string: string to pad
     """
     string = "   " + string
-    return string.ljust(12)[:12]
+    current_length = 0
+    for char in string:
+        if char.isascii():
+            current_length += 1
+        else:
+            current_length += 2
+    return string + ((12 - current_length) * " ")
 
 
 def pad_output(string):
@@ -90,8 +107,7 @@ def pad_output(string):
     Args:
         string: string to pad
     """
-    string = "   " + string
-    return string[:12]
+    return "   " + string
 
 
 def image_conversion_supported():

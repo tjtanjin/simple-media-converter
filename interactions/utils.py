@@ -1,3 +1,4 @@
+import i18n
 import os
 
 from telegram.ext import ConversationHandler
@@ -21,7 +22,7 @@ async def handle_interaction_cancel(update, context):
     await context.bot.answer_callback_query(update.callback_query.id)
     chat_id = update.callback_query.message.chat.id
     purge_user_media("./input_media/", chat_id)
-    await send_message(context, chat_id, "Ok! Your attempt to convert has been cancelled!")
+    await send_message(context, chat_id, i18n.t("interaction.cancelled"))
     return ConversationHandler.END
 
 
@@ -35,7 +36,7 @@ async def handle_interaction_timeout(update, context):
     chat_id = update.message.chat_id
     purge_user_media("./input_media/", chat_id)
     purge_user_media("./output_media/", chat_id)
-    await send_message(context, chat_id, "It seems you are no longer interested :( Hope to see you again!")
+    await send_message(context, chat_id, i18n.t("interaction.timeout"))
     return ConversationHandler.END
 
 
@@ -49,5 +50,4 @@ async def handle_interaction_not_allowed(update, context):
     """
     chat_id = update.message.chat_id
     await context.bot.delete_message(chat_id, update.message.message_id)
-    await send_message(context, chat_id, "You have an uploaded file pending, please wait or cancel your existing "
-                                         "attempt first!")
+    await send_message(context, chat_id, i18n.t("interaction.not_allowed"))

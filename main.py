@@ -1,8 +1,13 @@
+import i18n
 import os
 from dotenv import load_dotenv
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
-
+i18n.load_path.append('./assets/lang')
+i18n.set('file_format', 'json')
+i18n.set('filename_format', '{locale}.{format}')
+i18n.set('locale', os.getenv("LANGUAGE"))
+i18n.set('fallback', 'en-US')
 from telegram.ext import Application
 from interactions.loader import load_interactions
 

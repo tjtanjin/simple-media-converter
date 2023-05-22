@@ -1,0 +1,39 @@
+{
+    "en-US": {
+        "start.message": "Hello there! Drop your media here to start conversion! (supports video, image and sticker conversions).",
+
+        "help.header": "Here are the currently available conversion types:",
+        "help.footer": "Drop a video, image or sticker to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the Project Repository (https://github.com/tjtanjin/simple-media-converter)!",
+
+        "conversion.in_progress": "Converting %input_type% file to %output_type%...",
+        "conversion.complete": "Converted to %output_type% format. Retrieving file...",
+        "conversion.send_file": "Here is your file!",
+
+        "interaction.cancelled": "Your upload/conversion has been cancelled!",
+        "interaction.timeout": "We have not heard from you for a while, your upload/conversion has been cancelled :(",
+        "interaction.not_allowed": "You have an uploaded file pending, please wait or cancel your existing attempt first!",
+        "interaction.file_not_supported": "Unsupported file uploaded. Do /help to see supported file formats.",
+        "interaction.file_not_found": "File not found, please upload again.",
+        "interaction.prompt_selection": "Please select the file type to convert to:",
+
+        "image.detected": "Image file detected. Preparing file...",
+        "image.advise": "You sent your image as a photo. If you run into conversion issues, try sending your image as a file instead.",
+
+        "video.detected": "Video file detected, preparing file...",
+
+        "sticker.detected": "Sticker detected. Preparing file...",
+
+        "misc.error": "An error has occurred. Please open an issue at our <a href='https://github.com/tjtanjin/simple-media-converter'>Project Repository</a>!",
+        "misc.cancel": "Cancel",
+        "misc.input": "Input",
+        "misc.output": "Output",
+        "misc.images": "Images",
+        "misc.videos": "Videos",
+        "misc.stickers": "Stickers",
+        "misc.static": "Static",
+        "misc.animated": "Animated",
+        "misc.telegram": "Telegram",
+        "misc.all": "All",
+        "misc.supported": "Supported"
+    }
+}

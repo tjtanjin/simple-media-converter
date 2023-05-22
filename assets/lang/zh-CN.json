@@ -1,0 +1,39 @@
+{
+    "zh-CN": {
+        "start.message": "您好！将您的媒体上传到这里开始转换！（支持视频、图片和贴纸转换）。",
+
+        "help.header": "以下是当前可用的转换类型：",
+        "help.footer": "上传视频、图像或贴纸，立即开始您的文件转换！对这个迷你项目有想法和建议吗？前往项目存储库 (https://github.com/tjtanjin/simple-media-converter)！",
+
+        "conversion.in_progress": "正在将 %input_type% 文件转换为 %output_type%...",
+        "conversion.complete": "已转换为 %output_type% 格式。正在检索文件...",
+        "conversion.send_file": "请收集您的文件",
+
+        "interaction.cancelled": "您的上传/转换已被取消",
+        "interaction.timeout": "我们有一段时间没有收到您的消息，您的上传/转换已被取消 :(",
+        "interaction.not_allowed": "您有一个待上传的文件，请等待或先取消您现有的尝试！",
+        "interaction.file_not_supported": "上传了不支持的文件。执行 /help 查看支持的文件格式。",
+        "interaction.file_not_found": "查无此文件，请重新上传。",
+        "interaction.prompt_selection": "请选择要转换为的文件类型：",
+
+        "image.detected": "检测到图像文件。正在准备文件...",
+        "image.advise": "您将图像作为照片发送。如果遇到转换问题，请尝试将图像作为文件发送。",
+
+        "video.detected": "检测到视频文件，正在准备文件...",
+
+        "sticker.detected": "检测到贴纸。正在准备文件...",
+
+        "misc.error": "发生了错误。请在我们的<a href='https://github.com/tjtanjin/simple-media-converter'>项目存储库</a>中提出问题！",
+        "misc.cancel": "取消",
+        "misc.input": "输入",
+        "misc.output": "输出",
+        "misc.images": "图片",
+        "misc.videos": "视频",
+        "misc.stickers": "贴纸",
+        "misc.static": "静态",
+        "misc.animated": "动态",
+        "misc.telegram": "电报",
+        "misc.all": "全部",
+        "misc.supported": "支持的"
+    }
+}

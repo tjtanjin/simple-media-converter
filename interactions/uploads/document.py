@@ -1,3 +1,5 @@
+import i18n
+
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
 
 from interactions.uploads.image import handle_image_output, process_upload_as_image
@@ -44,5 +46,5 @@ async def get_uploaded_document(update, context):
         await process_upload_as_image(context, chat_id, file_id, input_type)
         return 2
     else:
-        await reply(update, "Unsupported file uploaded. Do /help to see supported file formats.")
+        await reply(update, i18n.t("interaction.file_not_supported"))
         return ConversationHandler.END

@@ -1,3 +1,5 @@
+import i18n
+
 from services.message_service import reply
 
 
@@ -8,4 +10,4 @@ async def execute(update, context):
         update: default telegram arg
         context: default telegram arg
     """
-    await reply(update, "Hello there! Drop your media here to start conversion! (supports video, image and sticker conversions)")
+    await reply(update, i18n.t("start.message"))
