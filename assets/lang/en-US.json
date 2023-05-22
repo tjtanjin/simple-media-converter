@@ -5,7 +5,7 @@
         "help.header": "Here are the currently available conversion types:",
         "help.footer": "Drop a video, image or sticker to start your file conversion today! Have ideas and suggestions for this mini project? Head over to the Project Repository (https://github.com/tjtanjin/simple-media-converter)!",
 
-        "conversion.in_progress": "Converting %input_type% file to %output_type%...",
+        "conversion.in_progress": "Converting %input_type% file to %output_type%",
         "conversion.complete": "Converted to %output_type% format. Retrieving file...",
         "conversion.send_file": "Here is your file!",
 

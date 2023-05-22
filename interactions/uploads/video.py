@@ -1,4 +1,5 @@
 import i18n
+import threading
 
 from telegram.constants import ParseMode
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
@@ -6,9 +7,9 @@ from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandl
 from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
     handle_interaction_not_allowed
 from services.conversion_service import convert_video
-from services.media_service import VIDEO_OUTPUT_TYPES, input_media_exist, clean_up_media, VIDEO_INPUT_TYPES
+from services.media_service import VIDEO_OUTPUT_TYPES, input_media_exist, clean_up_media, DOCUMENT_VIDEO_INPUT_TYPES
 from services.message_service import update_message, send_document, send_message, parse_placeholders
-from ui.builder import show_conversion_options
+from ui.builder import show_conversion_options, show_animated_loader
 
 
 def handle_video_input():
@@ -39,7 +40,7 @@ async def get_uploaded_video(update, context):
     file_id = update.message.video.file_id
     chat_id = update.message.chat_id
     input_type = update.message.video.mime_type[6:]
-    if input_type not in VIDEO_INPUT_TYPES:
+    if input_type not in DOCUMENT_VIDEO_INPUT_TYPES:
         await send_message(context, chat_id, i18n.t("interaction.file_not_supported"))
         return ConversationHandler.END
 
@@ -61,7 +62,7 @@ async def process_upload_as_video(context, chat_id, file_id, input_type):
     with open(f"./input_media/{chat_id}.{input_type}", "wb") as file:
         await new_file.download_to_memory(file)
     reply_markup = show_conversion_options(VIDEO_OUTPUT_TYPES, "video", input_type)
-    await update_message(receiving_msg, "interaction.prompt_selection", markup=reply_markup)
+    await update_message(receiving_msg, i18n.t("interaction.prompt_selection"), markup=reply_markup)
 
 
 async def handle_video_output(update, context):
@@ -86,7 +87,10 @@ async def handle_video_output(update, context):
         processing_msg = await send_message(context, chat_id, parse_placeholders(i18n.t("conversion.in_progress"),
                                                                                  ["%input_type%", "%output_type%"],
                                                                                  [input_type, output_type]))
-        convert_video(chat_id, input_type, output_type)
+        conversion_process = threading.Thread(target=convert_video, args=(chat_id, input_type, output_type))
+        conversion_process.start()
+        while conversion_process.isAlive():
+            await show_animated_loader(processing_msg)
         await update_message(processing_msg, parse_placeholders(i18n.t("conversion.complete"),
                                                                 ["%input_type%", "%output_type%"],
                                                                 [input_type, output_type]))

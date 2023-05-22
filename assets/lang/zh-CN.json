@@ -5,7 +5,7 @@
         "help.header": "以下是当前可用的转换类型：",
         "help.footer": "上传视频、图像或贴纸，立即开始您的文件转换！对这个迷你项目有想法和建议吗？前往项目存储库 (https://github.com/tjtanjin/simple-media-converter)！",
 
-        "conversion.in_progress": "正在将 %input_type% 文件转换为 %output_type%...",
+        "conversion.in_progress": "正在将 %input_type% 文件转换为 %output_type%",
         "conversion.complete": "已转换为 %output_type% 格式。正在检索文件...",
         "conversion.send_file": "请收集您的文件",
 

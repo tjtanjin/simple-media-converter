@@ -1,5 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+from services.message_service import update_message
+
 
 def build_menu(buttons, header_buttons=None, footer_buttons=None):
     """
@@ -29,3 +31,16 @@ def show_conversion_options(text, media_type, input_type):
     button_list.append([InlineKeyboardButton("Cancel", callback_data="cancel")])
     reply_markup = InlineKeyboardMarkup(build_menu(button_list))
     return reply_markup
+
+
+async def show_animated_loader(message):
+    """
+    Function that provides loading animation during code execution.
+    Args:
+        message: message to edit
+    """
+    await update_message(message, text=message.text + " /", )
+    await update_message(message, text=message.text + " -")
+    await update_message(message, text=message.text + " \\")
+    await update_message(message, text=message.text + " |")
+    return None

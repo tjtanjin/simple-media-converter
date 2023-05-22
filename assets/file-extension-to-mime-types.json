@@ -12,7 +12,7 @@
         "mp4": "mp4",
         "gif": "gif",
         "webm": "webm",
-        "mov": "quicktime",
+        "mov": "mov",
         "flv": "x-flv",
         "avi": "x-msvideo",
         "mkv": "x-matroska"

@@ -1,4 +1,5 @@
 import i18n
+import threading
 
 from telegram.constants import ParseMode
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
@@ -8,7 +9,7 @@ from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, han
 from services.conversion_service import convert_image
 from services.media_service import IMAGE_OUTPUT_TYPES, input_media_exist, clean_up_media, IMAGE_INPUT_TYPES
 from services.message_service import send_message, update_message, send_document, parse_placeholders
-from ui.builder import show_conversion_options
+from ui.builder import show_conversion_options, show_animated_loader
 
 
 def handle_image_input():
@@ -91,7 +92,10 @@ async def handle_image_output(update, context):
         processing_msg = await send_message(context, chat_id, parse_placeholders(i18n.t("conversion.in_progress"),
                                                                                  ["%input_type%", "%output_type%"],
                                                                                  [input_type, output_type]))
-        convert_image(chat_id, input_type, output_type)
+        conversion_process = threading.Thread(target=convert_image, args=(chat_id, input_type, output_type))
+        conversion_process.start()
+        while conversion_process.isAlive():
+            await show_animated_loader(processing_msg)
         await update_message(processing_msg, parse_placeholders(i18n.t("conversion.complete"),
                                                                 ["%input_type%", "%output_type%"],
                                                                 [input_type, output_type]))
