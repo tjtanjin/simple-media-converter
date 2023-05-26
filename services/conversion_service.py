@@ -13,7 +13,7 @@ from services.media_service import VIDEO_OUTPUT_TYPES
 LOTTIE_SUPPORTED_TYPES = ["png", "tiff", "pdf", "webp", "gif"]
 
 # check if api service is enabled
-API_SERVICE_ENABLED = os.getenv("API_ENABLED")
+API_SERVICE_ENABLED = os.getenv("API_SERVICE_ENABLED")
 
 
 def convert_video(chat_id, input_type, output_type):

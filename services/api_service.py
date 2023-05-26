@@ -1,10 +1,16 @@
 import aiohttp
+import asyncio
 import json
 import os
+import sys
+
+if sys.platform.startswith('win') and sys.version_info[0] == 3 and sys.version_info[1] >= 8:
+    policy = asyncio.WindowsSelectorEventLoopPolicy()
+    asyncio.set_event_loop_policy(policy)
 
 API_ENDPOINT = os.getenv("API_ENDPOINT")
-API_HEADERS = json.load(os.getenv("API_HEADERS"))
-API_BODY = json.load(os.getenv("API_BODY"))
+API_HEADERS = json.loads(os.getenv("API_HEADERS"))
+API_BODY = json.loads(os.getenv("API_BODY"))
 
 
 async def call_successful_conversion():
