@@ -1,3 +1,4 @@
+import asyncio
 import ffmpy
 import os
 import pyheif
@@ -5,10 +6,14 @@ import pyheif
 from rlottie_python import LottieAnimation
 from PIL import Image
 
+from services.api_service import call_successful_conversion
 from services.media_service import VIDEO_OUTPUT_TYPES
 
 # used to handle support lottie conversion types from telegram stickers
 LOTTIE_SUPPORTED_TYPES = ["png", "tiff", "pdf", "webp", "gif"]
+
+# check if api service is enabled
+API_SERVICE_ENABLED = os.getenv("API_ENABLED")
 
 
 def convert_video(chat_id, input_type, output_type):
@@ -29,6 +34,8 @@ def convert_video(chat_id, input_type, output_type):
         outputs=outputs
     )
     ff.run()
+    if API_SERVICE_ENABLED:
+        asyncio.run(call_successful_conversion())
     return None
 
 
@@ -44,6 +51,8 @@ def convert_sticker(chat_id, input_type, output_type):
         if output_type in LOTTIE_SUPPORTED_TYPES:
             anim = LottieAnimation.from_tgs(f"./input_media/{chat_id}.{input_type}")
             anim.save_animation(f"./output_media/{chat_id}.{output_type}")
+            if API_SERVICE_ENABLED:
+                asyncio.run(call_successful_conversion())
             return None
 
         if output_type in VIDEO_OUTPUT_TYPES:
@@ -56,6 +65,8 @@ def convert_sticker(chat_id, input_type, output_type):
             anim.save_animation(f"./input_media/{chat_id}.png")
             convert_image(chat_id, "png", output_type)
             os.remove(f"./input_media/{chat_id}.png")
+        if API_SERVICE_ENABLED:
+            asyncio.run(call_successful_conversion())
     except (Exception,):
         # if all else fails, convert sticker straight to image type
         convert_image(chat_id, "tgs", output_type)
@@ -86,7 +97,11 @@ def convert_image(chat_id, input_type, output_type):
     elif output_type == "ico":
         icon_size = [(32, 32)]
         img.save(f"./output_media/{chat_id}.{output_type}", sizes=icon_size)
+        if API_SERVICE_ENABLED:
+            asyncio.run(call_successful_conversion())
         return None
     img.save(f"./output_media/{chat_id}.{output_type}", quality=95, optimize=True)
+    if API_SERVICE_ENABLED:
+        asyncio.run(call_successful_conversion())
     return None
 

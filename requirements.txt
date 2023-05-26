@@ -1,3 +1,4 @@
+aiohttp==3.8.1
 ffmpy==0.3.0
 i18nice==0.6.2
 Pillow==9.2.0
