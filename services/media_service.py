@@ -41,7 +41,7 @@ def output_media_exist(chat_id, output_type):
     """
     if not os.path.isfile(f"./output_media/{chat_id}.{output_type}"):
         return False
-    directory, filename = os.path.split(f"./input_media/{chat_id}.{output_type}")
+    directory, filename = os.path.split(f"./output_media/{chat_id}.{output_type}")
     return filename in os.listdir(directory)
 
 
