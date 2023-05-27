@@ -80,7 +80,7 @@ For deployment, Docker is the preferred approach, especially if you would like t
     ```
 4) Once you have your desired image (obtained either via **step 2 or 3**), you may then start your container with the following command:
     ```
-    $ docker run -d --name smc --env-file .env tjtanjin/simple-media-converter
+    $ docker run -d --name smc --env-file .env tjtanjin/simple-media-converter:master
     ```
     Note: Notice that the `.env` file we configured in **step 1** is being passed via the `--env-file` argument. Hence, ensure that you have setup your configuration properly before passing in the file.
 
