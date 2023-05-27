@@ -76,7 +76,7 @@ For deployment, Docker is the preferred approach, especially if you would like t
     ```
 3) Since you are using the project as it is, go ahead to pull my image with the following command:
     ```
-    $ docker pull tjtanjin/simple-media-converter
+    $ docker pull tjtanjin/simple-media-converter:master
     ```
 4) Once you have your desired image (obtained either via **step 2 or 3**), you may then start your container with the following command:
     ```
@@ -86,7 +86,7 @@ For deployment, Docker is the preferred approach, especially if you would like t
 
 
 ##### Manual
-Alternatively, if you are unfamiliar with docker or would like a more manual approach, you may also follow the guide [here](https://gist.github.com/tjtanjin/ce560069506e3b6f4d70e570120249ed) to setup the bot 24/7.
+Alternatively, if you are unfamiliar with docker or would like a more manual approach, you may also follow the guide [here](https://gist.github.com/tjtanjin/ce560069506e3b6f4d70e570120249ed) to setup the bot 24/7. Note that you would have to go through the steps in the [setup](#setup) section to setup the project manually as well.
 
 ### Team
 * [Tan Jin](https://github.com/tjtanjin)
