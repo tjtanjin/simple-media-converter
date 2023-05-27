@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tjtanjin/simple-media-converter/master/assets/app_logo.png" />
+  <img width=300 src="https://raw.githubusercontent.com/tjtanjin/simple-media-converter/master/assets/app_logo.png" />
   <h1 align="center">Simple Media Converter</h1>
 </p>
 
