@@ -65,8 +65,6 @@ def convert_sticker(chat_id, input_type, output_type):
             anim.save_animation(f"./input_media/{chat_id}.png")
             convert_image(chat_id, "png", output_type)
             os.remove(f"./input_media/{chat_id}.png")
-        if API_SERVICE_ENABLED:
-            asyncio.run(call_successful_conversion())
     except (Exception,):
         # if all else fails, convert sticker straight to image type
         convert_image(chat_id, "tgs", output_type)
