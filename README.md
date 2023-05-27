@@ -59,7 +59,8 @@ The following section will guide you through setting up your own Simple Media Co
     ```
 4) Following which, create (or copy) a `.env` file at the root of the project using the provided [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template). In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the `.env` file with the token you received from [BotFather](https://t.me/BotFather).
 5) You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) file.
-6) Once you are done with configuration, you may then head to the root of the project and execute the following command to launch your bot:
+6) When you are done with configurations, create 2 directories at the root of the project named `input_media` and `output_media`. These folders will be used to temporarily hold media files during conversions.
+7) Finally, head to the root of the project and execute the following command to launch your bot:
     ```
     $ python3 main.py
     ```

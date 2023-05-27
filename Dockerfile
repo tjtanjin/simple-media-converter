@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 
 # copy all the files to the container
 COPY . .
+RUN mkdir ./input_media ./output_media
 
 # install app-specific dependencies
 RUN pip install --no-cache-dir -r requirements.txt
