@@ -90,7 +90,7 @@ async def handle_video_output(update, context):
                                                                                     [input_type, output_type]))
         conversion_process = threading.Thread(target=convert_video, args=(chat_id, input_type, output_type))
         conversion_process.start()
-        while conversion_process.isAlive():
+        while conversion_process.is_alive():
             await show_animated_loader(processing_msg)
         await update_message(processing_msg, parse_placeholders(i18n.t("conversion.complete"),
                                                                 ["%input_type%", "%output_type%"],
