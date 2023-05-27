@@ -4,6 +4,7 @@
 </p>
 
 <p align="center">
+  <img src="https://github.com/tjtanjin/simple-media-converter/actions/workflows/docker-hub.yml/badge.svg">
   <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fmy-api.tjtanjin.com%3A2999%2Faggregator%2Fapi%2Fv1%2Fget%2Fsmc_files_converted" />
 </p>
 
@@ -46,26 +47,46 @@ https://github.com/tjtanjin/simple-media-converter
 
 ### Setup
 The following section will guide you through setting up your own Simple Media Converter (**[telegram](https://web.telegram.org/) account required**).
-* First, head over to [BotFather](https://t.me/BotFather) and create your own telegram bot with the `/newbot` command. After choosing an appropriate name and telegram handle for your bot, note down the **bot token** provided to you.
-* Next, `cd` to the directory of where you wish to store the project and clone this repository. An example is provided below:
-```
-$ cd /home/user/exampleuser/projects/
-$ git clone https://github.com/tjtanjin/simple-media-converter.git
-```
-* Once the project has been cloned, `cd` into it and install required dependencies with the following command:
-```
-$ python3 -m pip install --no-cache-dir -r requirements.txt
-```
-* Following which, create (or copy) a `.env` file at the root of the project using the provided `.env.template`. In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the `.env` file with the token you received from [BotFather](https://t.me/BotFather).
-* You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the `.env.template` file.
-* Once you are done with configuration, you may then head to the root of the project and execute the following command to launch your bot:
-```
-$ python3 main.py
-```
-* If you wish to host your telegram bot online 24/7, do checkout the guide [here](https://gist.github.com/tjtanjin/ce560069506e3b6f4d70e570120249ed).
+1) First, head over to [BotFather](https://t.me/BotFather) and create your own telegram bot with the `/newbot` command. After choosing an appropriate name and telegram handle for your bot, note down the **bot token** provided to you.
+2) Next, `cd` to the directory of where you wish to store the project and clone this repository. An example is provided below:
+    ```
+    $ cd /home/user/exampleuser/projects/
+    $ git clone https://github.com/tjtanjin/simple-media-converter.git
+    ```
+3) Once the project has been cloned, `cd` into it and install required dependencies with the following command:
+    ```
+    $ python3 -m pip install --no-cache-dir -r requirements.txt
+    ```
+4) Following which, create (or copy) a `.env` file at the root of the project using the provided `.env.template`. In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the `.env` file with the token you received from [BotFather](https://t.me/BotFather).
+5) You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the `.env.template` file.
+6) Once you are done with configuration, you may then head to the root of the project and execute the following command to launch your bot:
+    ```
+    $ python3 main.py
+    ```
 
 ### Deployment
-*to be updated*
+
+##### Docker
+For deployment, Docker is the preferred approach, especially if you would like to avoid the hassle of manually installing dependencies. If you are unfamiliar with docker, it is recommended you go through a quick tutorial for it first. This section **will not** dive into the details of docker usage.
+
+1) First, if you have not done so, create a `.env` file from the provided `.env.template` and update the variables (at the very least the **BOT_TOKEN**). If you have made code changes to the project, proceed to **step 2**. Otherwise, if you are using the project as it is, proceed to **step 3**.
+2) Since you have made code changes to the project, you would have to build your own docker image with the following command (take note to replace the tag `-t` with that of your own):
+    ```
+    $ docker build -t tjtanjin/simple-media-converter .
+    ```
+3) Since you are using the project as it is, go ahead to pull my image with the following command:
+    ```
+    $ docker pull tjtanjin/simple-media-converter
+    ```
+4) Once you have your desired image (obtained either via **step 2 or 3**), you may then start your container with the following command:
+    ```
+    $ docker run -d --name smc --env-file .env tjtanjin/simple-media-converter
+    ```
+    Note: Notice that the `.env` file we configured in **step 1** is being passed via the `--env-file` argument. Hence, ensure that you have setup your configuration properly before passing in the file.
+
+
+##### Manual
+Alternatively, if you are unfamiliar with docker or would like a more manual approach, you may also follow the guide [here](https://gist.github.com/tjtanjin/ce560069506e3b6f4d70e570120249ed) to setup the bot 24/7.
 
 ### Team
 * [Tan Jin](https://github.com/tjtanjin)
