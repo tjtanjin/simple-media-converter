@@ -57,8 +57,8 @@ The following section will guide you through setting up your own Simple Media Co
     ```
     $ python3 -m pip install --no-cache-dir -r requirements.txt
     ```
-4) Following which, create (or copy) a `.env` file at the root of the project using the provided `.env.template`. In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the `.env` file with the token you received from [BotFather](https://t.me/BotFather).
-5) You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the `.env.template` file.
+4) Following which, create (or copy) a `.env` file at the root of the project using the provided [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template). In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the `.env` file with the token you received from [BotFather](https://t.me/BotFather).
+5) You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) file.
 6) Once you are done with configuration, you may then head to the root of the project and execute the following command to launch your bot:
     ```
     $ python3 main.py
@@ -69,7 +69,7 @@ The following section will guide you through setting up your own Simple Media Co
 ##### Docker
 For deployment, Docker is the preferred approach, especially if you would like to avoid the hassle of manually installing dependencies. If you are unfamiliar with docker, it is recommended you go through a quick tutorial for it first. This section **will not** dive into the details of docker usage.
 
-1) First, if you have not done so, create a `.env` file from the provided `.env.template` and update the variables (at the very least the **BOT_TOKEN**). If you have made code changes to the project, proceed to **step 2**. Otherwise, if you are using the project as it is, proceed to **step 3**.
+1) First, if you have not done so, create a `.env` file from the provided [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) and update the variables (at the very least the **BOT_TOKEN**). If you have made code changes to the project, proceed to **step 2**. Otherwise, if you are using the project as it is, proceed to **step 3**.
 2) Since you have made code changes to the project, you would have to build your own docker image with the following command (take note to replace the tag `-t` with that of your own):
     ```
     $ docker build -t tjtanjin/simple-media-converter .
