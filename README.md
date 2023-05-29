@@ -5,7 +5,7 @@
 
 <p align="center">
   <img src="https://github.com/tjtanjin/simple-media-converter/actions/workflows/docker-hub.yml/badge.svg">
-  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fmy-api.tjtanjin.com%3A2999%2Faggregator%2Fapi%2Fv1%2Fget%2Fsmc_files_converted" />
+  <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fmy-api.tjtanjin.com%2Faggregator%2Fapi%2Fv1%2Fget%2Fsmc_files_converted" />
 </p>
 
 ## Table of Contents
