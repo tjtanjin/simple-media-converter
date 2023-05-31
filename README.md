@@ -91,7 +91,7 @@ Alternatively, if you are unfamiliar with docker or would like a more manual app
 * [Tan Jin](https://github.com/tjtanjin)
 
 ### Contributing
-If you wish to make code contributions to the project, then please be advised to give the [Developer Guide]() a read. Once you are ready, feel free to open a pull request and describe clearly the changes and what they are intended to do (enhancement, bug fixes etc).
+If you wish to make code contributions to the project, then please be advised to give the [Developer Guide](https://github.com/tjtanjin/simple-media-converter/blob/master/docs/DeveloperGuide.md) a read. Once you are ready, feel free to open a pull request and describe clearly the changes and what they are intended to do (enhancement, bug fixes etc).
 
 Alternatively, you may simply raise bugs or suggestions by opening an issue.
 
