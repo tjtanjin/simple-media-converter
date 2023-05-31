@@ -19,19 +19,18 @@
 * [Others](#others)
 
 ### Introduction
-Simple Media Converter is a telegram bot that allows users to upload files (videos, images and even telegram stickers!) to have them converted to the format they desire. With support for a wide variety of formats, this bot brings about a lot of convenience for those looking to just make a simple file conversion! In fact, convenience is what drove me to embark on this project and I hope to add more functionalities and conversion types to the bot in the near future. You may check out the bot at the link below:
-```
-https://t.me/SimpleMediaConverterBot
-```
+Have you ever been in a situation where you needed a quick and simple way to change the format of your files? Perhaps your friend has shared with you a funny video but your phone was unable to open it? Well, [Simple Media Converter](https://t.me/SimpleMediaConverterBot) is just what you need! 
+
+[Simple Media Converter](https://t.me/SimpleMediaConverterBot) is a telegram bot that allows users to upload files (videos, images and even telegram stickers!) to have them converted to the format they desire. With support for a wide variety of formats, this bot brings about a lot of convenience for those looking to just make a simple file conversion! In fact, convenience is what drove me to embark on this project and I hope to add more functionalities and conversion types to the bot in the near future. Should this appeal to you, then its usage is as simple as dropping your files to the [bot](https://t.me/SimpleMediaConverterBot) today!
 
 ### Features
-Simple Media Converter currently accepts 3 types of input (videos, images and telegram stickers). Supported formats for each type can be found within the [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) file. By default, all supported formats are included within the template, but you can always remove any of the formats as desired.
+Simple Media Converter currently accepts 3 types of input (videos, images and telegram stickers). Supported formats for each type can be found within the [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) file. By default, all supported formats are included within the template, but you can always remove any of the formats as desired.
 
 If you require support for additional formats that are not yet available in the application, feel free to open an issue or even better, make a pull request and help make the project better!
 
 ### Technologies
 Technologies used by Simple Media Converter are as below:
-##### Done with:
+#### Done with:
 
 <p align="center">
   <img height="150" width="150" src="https://logos-download.com/wp-content/uploads/2016/10/Python_logo_icon.png"/>
@@ -40,10 +39,9 @@ Technologies used by Simple Media Converter are as below:
 Python
 </p>
 
-##### Project Repository
-```
-https://github.com/tjtanjin/simple-media-converter
-```
+#### Project Repository
+- https://github.com/tjtanjin/simple-media-converter
+
 
 ### Setup
 The following section will guide you through setting up your own Simple Media Converter (**[telegram](https://web.telegram.org/) account required**).
@@ -57,9 +55,9 @@ The following section will guide you through setting up your own Simple Media Co
     ```
     $ python3 -m pip install --no-cache-dir -r requirements.txt
     ```
-4) Following which, create (or copy) a `.env` file at the root of the project using the provided [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template). In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the `.env` file with the token you received from [BotFather](https://t.me/BotFather).
-5) You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) file.
-6) When you are done with configurations, create 2 directories at the root of the project named `input_media` and `output_media`. These folders will be used to temporarily hold media files during conversions.
+4) Following which, create (or copy) a *.env* file at the root of the project using the provided [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template). In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the *.env* file with the token you received from [BotFather](https://t.me/BotFather).
+5) You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) file.
+6) When you are done with configurations, create 2 directories at the root of the project named *input_media* and *output_media*. These folders will be used to temporarily hold media files during conversions.
 7) Finally, head to the root of the project and execute the following command to launch your bot:
     ```
     $ python3 main.py
@@ -67,10 +65,10 @@ The following section will guide you through setting up your own Simple Media Co
 
 ### Deployment
 
-##### Docker
+#### Docker
 For deployment, Docker is the preferred approach, especially if you would like to avoid the hassle of manually installing dependencies. If you are unfamiliar with docker, it is recommended you go through a quick tutorial for it first. This section **will not** dive into the details of docker usage.
 
-1) First, if you have not done so, create a `.env` file from the provided [.env.template](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) and update the variables (at the very least the **BOT_TOKEN**). If you have made code changes to the project, proceed to **step 2**. Otherwise, if you are using the project as it is, proceed to **step 3**.
+1) First, if you have not done so, create a *.env* file from the provided [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) and update the variables (at the very least the **BOT_TOKEN**). If you have made code changes to the project, proceed to **step 2**. Otherwise, if you are using the project as it is, proceed to **step 3**.
 2) Since you have made code changes to the project, you would have to build your own docker image with the following command (take note to replace the tag `-t` with that of your own):
     ```
     $ docker build -t tjtanjin/simple-media-converter .
@@ -79,21 +77,23 @@ For deployment, Docker is the preferred approach, especially if you would like t
     ```
     $ docker pull tjtanjin/simple-media-converter:master
     ```
-4) Once you have your desired image (obtained either via **step 2 or 3**), you may then start your container with the following command:
+4) Once you have your desired image (obtained either via **step 2 or 3**), you may then start your container with the following command (remember to replace image name below if you built your own image):
     ```
     $ docker run -d --name smc --env-file .env tjtanjin/simple-media-converter:master
     ```
-    Note: Notice that the `.env` file we configured in **step 1** is being passed via the `--env-file` argument. Hence, ensure that you have setup your configuration properly before passing in the file.
+    Note: Notice that the *.env* file we configured in **step 1** is being passed via the `--env-file` argument. Hence, ensure that you have setup your configuration properly before passing in the file.
 
 
-##### Manual
+#### Manual
 Alternatively, if you are unfamiliar with docker or would like a more manual approach, you may also follow the guide [here](https://gist.github.com/tjtanjin/ce560069506e3b6f4d70e570120249ed) to setup the bot 24/7. Note that you would have to go through the steps in the [setup](#setup) section to setup the project manually as well.
 
 ### Team
 * [Tan Jin](https://github.com/tjtanjin)
 
 ### Contributing
-If you have code to contribute to the project, open a pull request and describe clearly the changes and what they are intended to do (enhancement, bug fixes etc). Alternatively, you may simply raise bugs or suggestions by opening an issue.
+If you wish to make code contributions to the project, then please be advised to give the [Developer Guide]() a read. Once you are ready, feel free to open a pull request and describe clearly the changes and what they are intended to do (enhancement, bug fixes etc).
+
+Alternatively, you may simply raise bugs or suggestions by opening an issue.
 
 ### Others
 For any questions regarding the implementation of the project, please drop an email to: cjtanjin@gmail.com.
