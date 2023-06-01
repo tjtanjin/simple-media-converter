@@ -1,0 +1,20 @@
+name: Deployment
+
+on:
+  workflow_run:
+    workflows: ["Docker Hub"]
+    types:
+      - completed
+      
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing deployment script
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.DEPLOYMENT_HOST }}
+        username: ${{ secrets.DEPLOYMENT_USERNAME }}
+        password: ${{ secrets.DEPLOYMENT_PASSWORD }}
+        script: cd simple-media-converter/ && ./deploy.sh
