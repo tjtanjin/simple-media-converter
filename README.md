@@ -4,7 +4,8 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/tjtanjin/simple-media-converter/actions/workflows/docker-hub.yml/badge.svg">
+  <img src="https://github.com/tjtanjin/simple-media-converter/actions/workflows/docker-hub.yml/badge.svg" />
+  <img src="https://github.com/tjtanjin/simple-media-converter/actions/workflows/deployment.yml/badge.svg" />
   <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fmy-api.tjtanjin.com%2Faggregator%2Fapi%2Fv1%2Fget%2Fsmc_files_converted&logo=data:image/png;base64,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" />
 </p>
 
@@ -68,20 +69,18 @@ The following section will guide you through setting up your own Simple Media Co
 #### Docker
 For deployment, Docker is the preferred approach, especially if you would like to avoid the hassle of manually installing dependencies. If you are unfamiliar with docker, it is recommended you go through a quick tutorial for it first. This section **will not** dive into the details of docker usage.
 
-1) First, if you have not done so, create a *.env* file from the provided [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) and update the variables (at the very least the **BOT_TOKEN**). If you have made code changes to the project, proceed to **step 2**. Otherwise, if you are using the project as it is, proceed to **step 3**.
-2) Since you have made code changes to the project, you would have to build your own docker image with the following command (take note to replace the tag `-t` with that of your own):
+1) First, if you have not done so, create a *.env* file from the provided [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) and update the variables (at the very least, you need to input a valid **BOT_TOKEN**). 
+2) If you using the project as it is (**i.e. no intended code changes**), then simply run `./deploy.sh` within the scripts folder and your deployment will be automatically done! Otherwise, if you wish to make code changes to the project, please read on.
+3) Once you are done with your code changes, you would have to build your own docker image with the following command (take note to replace the tag `-t` with that of your own):
     ```
     $ docker build -t tjtanjin/simple-media-converter .
     ```
-3) Since you are using the project as it is, go ahead to pull my image with the following command:
-    ```
-    $ docker pull tjtanjin/simple-media-converter:master
-    ```
-4) Once you have your desired image (obtained either via **step 2 or 3**), you may then start your container with the following command (remember to replace image name below if you built your own image):
+4) Upon obtaining your image, you may then start your container with the following command (remember to replace image name below if you built your own image):
     ```
     $ docker run -d --name smc --env-file .env tjtanjin/simple-media-converter:master
     ```
-    Note: Notice that the *.env* file we configured in **step 1** is being passed via the `--env-file` argument. Hence, ensure that you have setup your configuration properly before passing in the file.
+    Note: Notice that the *.env* file we configured in **step 1** is being passed via the `--env-file` argument. This is true for the auto deployment in **step 2** as well. Hence, ensure that you have setup your configuration properly before passing in the file.
+5) Finally, you may wish to **update the deployment script** to reference your own image/container if you would like to have an easier deployment workflow.
 
 
 #### Manual
@@ -91,7 +90,7 @@ Alternatively, if you are unfamiliar with docker or would like a more manual app
 * [Tan Jin](https://github.com/tjtanjin)
 
 ### Contributing
-If you wish to make code contributions to the project, then please be advised to give the [Developer Guide](https://github.com/tjtanjin/simple-media-converter/blob/master/docs/DeveloperGuide.md) a read. Once you are ready, feel free to open a pull request and describe clearly the changes and what they are intended to do (enhancement, bug fixes etc).
+If you wish to make code contributions to the project, then please be advised to give the [*Developer Guide*](https://github.com/tjtanjin/simple-media-converter/blob/master/docs/DeveloperGuide.md) a read. Once you are ready, feel free to open a pull request and describe clearly the changes and what they are intended to do (enhancement, bug fixes etc).
 
 Alternatively, you may simply raise bugs or suggestions by opening an issue.
 

@@ -17,4 +17,4 @@ jobs:
         host: ${{ secrets.DEPLOYMENT_HOST }}
         username: ${{ secrets.DEPLOYMENT_USERNAME }}
         password: ${{ secrets.DEPLOYMENT_PASSWORD }}
-        script: cd simple-media-converter/ && ./scripts/deploy.sh smc
+        script: cd simple-media-converter/ && ./scripts/deploy.sh simple-media-converter
