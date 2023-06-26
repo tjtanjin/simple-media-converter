@@ -30,4 +30,4 @@ fi
 docker pull tjtanjin/simple-media-converter:master
 
 # run new docker container
-docker run -d --name $1 --env-file ../.env –restart=always tjtanjin/simple-media-converter:master --restart always
+docker run -d --name $1 --env-file ../.env tjtanjin/simple-media-converter:master --restart always

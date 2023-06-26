@@ -70,7 +70,7 @@ The following section will guide you through setting up your own Simple Media Co
 For deployment, Docker is the preferred approach, especially if you would like to avoid the hassle of manually installing dependencies. If you are unfamiliar with docker, it is recommended you go through a quick tutorial for it first. This section **will not** dive into the details of docker usage.
 
 1) First, if you have not done so, create a *.env* file from the provided [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) and update the variables (at the very least, you need to input a valid **BOT_TOKEN**). 
-2) If you using the project as it is (**i.e. no intended code changes**), then simply run `./deploy.sh` within the scripts folder and your deployment will be automatically done! Otherwise, if you wish to make code changes to the project, please read on.
+2) If you using the project as it is (**i.e. no intended code changes**), then simply run `./deploy.sh simple-media-converter` within the scripts folder and your deployment will be automatically done! Otherwise, if you wish to make code changes to the project, please read on.
 3) Once you are done with your code changes, you would have to build your own docker image with the following command (take note to replace the tag `-t` with that of your own):
     ```
     $ docker build -t tjtanjin/simple-media-converter .
