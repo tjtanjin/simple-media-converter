@@ -92,7 +92,7 @@ Alternatively, if you are unfamiliar with docker or would like a more manual app
 ### Contributing
 If you wish to make code contributions to the project, then please be advised to give the [*Developer Guide*](https://github.com/tjtanjin/simple-media-converter/blob/master/docs/DeveloperGuide.md) a read. Once you are ready, feel free to open a pull request and describe clearly the changes and what they are intended to do (enhancement, bug fixes etc).
 
-Alternatively, you may simply raise bugs or suggestions by opening an issue.
+Alternatively, you may contact me via [**discord**](https://discord.gg/X8VSdZvBQY) or simply raise bugs or suggestions by opening an [**issue**](https://github.com/tjtanjin/simple-media-converter/issues).
 
 ### Others
-For any questions regarding the implementation of the project, please drop an email to: cjtanjin@gmail.com.
+For any questions regarding the implementation of the project, you may reach out on [**discord**](https://discord.gg/X8VSdZvBQY) or drop an email to: cjtanjin@gmail.com.
