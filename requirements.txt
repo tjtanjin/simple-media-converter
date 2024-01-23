@@ -1,7 +1,7 @@
 aiohttp==3.9.0
 ffmpy==0.3.0
 i18nice==0.6.2
-Pillow==10.0.1 
+Pillow==10.2.0 
 pyheif==0.7.1
 python-dotenv==0.21.1
 python-telegram-bot==20.3
