@@ -14,6 +14,7 @@
         "interaction.not_allowed": "You have an uploaded file pending, please wait or cancel your existing attempt first!",
         "interaction.file_not_supported": "Unsupported file uploaded. Do /help to see supported file formats.",
         "interaction.file_not_found": "File not found, please upload again.",
+        "interaction.file_too_large": "File size is too large, cannot exceed 20mb!",
         "interaction.prompt_selection": "Please select the file type to convert to:",
 
         "image.detected": "Image file detected. Preparing file...",
@@ -23,7 +24,7 @@
 
         "sticker.detected": "Sticker detected. Preparing file...",
 
-        "misc.error": "An error has occurred. Please open an issue at our <a href='https://github.com/tjtanjin/simple-media-converter'>Project Repository</a>!",
+        "misc.error": "Conversion failed, please check your media type. If you believe this to be a bug, please open an issue at our <a href='https://github.com/tjtanjin/simple-media-converter'>Project Repository</a>!",
         "misc.cancel": "Cancel",
         "misc.input": "Input",
         "misc.output": "Output",

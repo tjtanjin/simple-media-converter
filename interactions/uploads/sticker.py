@@ -2,6 +2,7 @@ import i18n
 import threading
 
 from telegram.constants import ParseMode
+from telegram.error import BadRequest
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
 
 from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
@@ -48,7 +49,12 @@ async def get_uploaded_sticker(update, context):
         return ConversationHandler.END
 
     receiving_msg = await send_message(context, chat_id, i18n.t("sticker.detected"))
-    new_file = await context.bot.get_file(file_id)
+    try:
+        new_file = await context.bot.get_file(file_id)
+    except BadRequest:
+        await update_message(receiving_msg, i18n.t("interaction.file_too_large"))
+        return ConversationHandler.END
+
     with open(f"./input_media/{chat_id}.{input_type}", "wb") as file:
         await new_file.download_to_memory(file)
     if update.message.sticker.is_animated:

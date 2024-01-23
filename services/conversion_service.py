@@ -4,7 +4,7 @@ import os
 import pyheif
 
 from rlottie_python import LottieAnimation
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 
 from services.api_service import call_successful_conversion
 from services.media_service import VIDEO_OUTPUT_TYPES
@@ -79,17 +79,20 @@ def convert_image(chat_id, input_type, output_type):
         input_type: video input type
         output_type: video output type
     """
-    if input_type == "heif":
-        heif_file = pyheif.read(f"./input_media/{chat_id}.{input_type}")
-        img = Image.frombytes(
-            heif_file.mode,
-            heif_file.size,
-            heif_file.data,
-            "raw",
-            heif_file.mode,
-            heif_file.stride)
-    else:
-        img = Image.open(f"./input_media/{chat_id}.{input_type}")
+    try:
+        if input_type == "heif":
+            heif_file = pyheif.read(f"./input_media/{chat_id}.{input_type}")
+            img = Image.frombytes(
+                heif_file.mode,
+                heif_file.size,
+                heif_file.data,
+                "raw",
+                heif_file.mode,
+                heif_file.stride)
+        else:
+            img = Image.open(f"./input_media/{chat_id}.{input_type}")
+    except UnidentifiedImageError:
+        return None
     if output_type == "jpg" or ((input_type == "tiff" or input_type == "png") and output_type == "pdf"):
         img = img.convert('RGB')
     elif output_type == "ico":

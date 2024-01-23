@@ -14,6 +14,7 @@
         "interaction.not_allowed": "您有一个待上传的文件，请等待或先取消您现有的尝试！",
         "interaction.file_not_supported": "上传了不支持的文件。执行 /help 查看支持的文件格式。",
         "interaction.file_not_found": "查无此文件，请重新上传。",
+        "interaction.file_too_large": "文件太大，不能超过20mb！",
         "interaction.prompt_selection": "请选择要转换为的文件类型：",
 
         "image.detected": "检测到图像文件。正在准备文件...",
@@ -23,7 +24,7 @@
 
         "sticker.detected": "检测到贴纸。正在准备文件...",
 
-        "misc.error": "发生了错误。请在我们的<a href='https://github.com/tjtanjin/simple-media-converter'>项目存储库</a>中提出问题！",
+        "misc.error": "转换失败，请检查您的媒体类型。如果您认为这是一个错误，请在我们的<a href='https://github.com/tjtanjin/simple-media-converter'>项目存储库</a>中提出问题！",
         "misc.cancel": "取消",
         "misc.input": "输入",
         "misc.output": "输出",
