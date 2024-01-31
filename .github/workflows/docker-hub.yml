@@ -1,4 +1,5 @@
 name: Docker Hub
+run-name: Docker Hub
 
 on:
   push:

@@ -49,19 +49,23 @@ The following section will guide you through setting up your own Simple Media Co
 1) First, head over to [BotFather](https://t.me/BotFather) and create your own telegram bot with the `/newbot` command. After choosing an appropriate name and telegram handle for your bot, note down the **bot token** provided to you.
 2) Next, `cd` to the directory of where you wish to store the project and clone this repository. An example is provided below:
     ```
-    $ cd /home/user/exampleuser/projects/
-    $ git clone https://github.com/tjtanjin/simple-media-converter.git
+    cd /home/user/exampleuser/projects/
+    git clone https://github.com/tjtanjin/simple-media-converter.git
     ```
 3) Once the project has been cloned, `cd` into it and install required dependencies with the following command:
     ```
-    $ python3 -m pip install --no-cache-dir -r requirements.txt
+    python3 -m pip install --no-cache-dir -r requirements.txt
     ```
 4) Following which, create (or copy) a *.env* file at the root of the project using the provided [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template). In order to run the bot, the bare minimum that needs to be done is for you to replace the **BOT_TOKEN** variable within the *.env* file with the token you received from [BotFather](https://t.me/BotFather).
 5) You can also feel free to modify the other variables as you deem fit. Clear descriptions for the variables have been included in the [*.env.template*](https://github.com/tjtanjin/simple-media-converter/blob/master/.env.template) file.
-6) When you are done with configurations, create 2 directories at the root of the project named *input_media* and *output_media*. These folders will be used to temporarily hold media files during conversions.
+6) When you are done with configurations, create 2 directories at the root of the project named *input_media* and *output_media*. These folders will be used to temporarily hold media files during conversions:
+    ```
+    mkdir input_media
+    mkdir output_media
+    ```
 7) Finally, head to the root of the project and execute the following command to launch your bot:
     ```
-    $ python3 main.py
+    python3 main.py
     ```
 
 ### Deployment
@@ -73,18 +77,17 @@ For deployment, Docker is the preferred approach, especially if you would like t
 2) If you using the project as it is (**i.e. no intended code changes**), then simply run `./deploy.sh simple-media-converter` within the scripts folder and your deployment will be automatically done! Otherwise, if you wish to make code changes to the project, please read on.
 3) Once you are done with your code changes, you would have to build your own docker image with the following command (take note to replace the tag `-t` with that of your own):
     ```
-    $ docker build -t tjtanjin/simple-media-converter .
+    docker build -t tjtanjin/simple-media-converter .
     ```
 4) Upon obtaining your image, you may then start your container with the following command (remember to replace image name below if you built your own image):
     ```
-    $ docker run -d --name smc --env-file .env tjtanjin/simple-media-converter:master
+    docker run -d --name smc --env-file .env tjtanjin/simple-media-converter:master
     ```
     Note: Notice that the *.env* file we configured in **step 1** is being passed via the `--env-file` argument. This is true for the auto deployment in **step 2** as well. Hence, ensure that you have setup your configuration properly before passing in the file.
 5) Finally, you may wish to **update the deployment script** to reference your own image/container if you would like to have an easier deployment workflow.
 
-
 #### Manual
-Alternatively, if you are unfamiliar with docker or would like a more manual approach, you may also follow the guide [here](https://gist.github.com/tjtanjin/ce560069506e3b6f4d70e570120249ed) to setup the bot 24/7. Note that you would have to go through the steps in the [setup](#setup) section to setup the project manually as well.
+Alternatively, if you are unfamiliar with docker or would like a more manual approach, you may also follow the guide [here](https://tjtanjin.medium.com/how-to-host-a-telegram-bot-on-ubuntu-a-step-by-step-guide-a38fb8c04f72) to setup the bot 24/7. Note that you would have to go through the steps in the [setup](#setup) section to setup the project manually as well.
 
 ### Team
 * [Tan Jin](https://github.com/tjtanjin)
