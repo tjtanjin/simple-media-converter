@@ -15,7 +15,7 @@ i18n.set('fallback', 'en-US')
 from interactions.loader import load_interactions # noqa
 
 if os.getenv("HEALTHCHECKS_ENDPOINT"):
-    HealthPing(url="https://hc-ping.com/613b74f2-e71b-49de-95e5-f8b617d23525",
+    HealthPing(url=os.getenv("HEALTHCHECKS_ENDPOINT"),
                schedule="1 * * * *",
                retries=[60, 300, 720]).start()
 
