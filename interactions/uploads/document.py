@@ -4,8 +4,8 @@ from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandl
 
 from interactions.uploads.image import handle_image_output, process_upload_as_image
 from interactions.uploads.video import handle_video_output, process_upload_as_video
-from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
-    handle_interaction_not_allowed
+from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, \
+    handle_interaction_cancel, handle_interaction_not_allowed
 from services.media_service import DOCUMENT_IMAGE_INPUT_TYPES, DOCUMENT_VIDEO_INPUT_TYPES
 from services.message_service import reply
 
@@ -17,8 +17,8 @@ def handle_document_input():
     return ConversationHandler(
         entry_points=[MessageHandler(filters.Document.ALL, get_uploaded_document)],
         states={
-            1: [CallbackQueryHandler(handle_video_output, pattern='video_(\S+)_(\S+)')],
-            2: [CallbackQueryHandler(handle_image_output, pattern='image_(\S+)_(\S+)')],
+            1: [CallbackQueryHandler(handle_video_output, pattern='video_(\S+)_(\S+)')], # noqa
+            2: [CallbackQueryHandler(handle_image_output, pattern='image_(\S+)_(\S+)')], # noqa
             ConversationHandler.TIMEOUT: [MessageHandler(filters.ALL, handle_interaction_timeout)]
         },
         fallbacks=[
@@ -31,7 +31,7 @@ def handle_document_input():
 
 async def get_uploaded_document(update, context):
     """
-    Captures uploaded documents that are media files and processes them based on detected media type.
+    Captures uploaded documents that are media files and processes based on detected media type.
     Args:
         update: default telegram arg
         context: default telegram arg

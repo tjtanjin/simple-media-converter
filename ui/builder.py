@@ -25,7 +25,8 @@ def show_conversion_options(text, media_type, input_type):
     """
     button_list = []
     for i in range(0, len(text)):
-        button_list.append([InlineKeyboardButton(text[i], callback_data=media_type + "_" + input_type + "_" + text[i])])
+        button_list.append([InlineKeyboardButton(text[i], callback_data=media_type + "_" +
+                                                 input_type + "_" + text[i])])
 
     # append a final cancel button for users to cancel conversion
     button_list.append([InlineKeyboardButton("Cancel", callback_data="cancel")])

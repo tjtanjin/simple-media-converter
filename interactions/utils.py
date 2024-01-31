@@ -42,8 +42,8 @@ async def handle_interaction_timeout(update, context):
 
 async def handle_interaction_not_allowed(update, context):
     """
-    Handles logic for when a user performs an action not allowed during an interaction (e.g. uploading another file
-    while there is an existing prompt).
+    Handles logic for when a user performs an action not allowed during an interaction
+    (e.g. uploading another file while there is an existing prompt).
     Args:
         update: default telegram arg
         context: default telegram arg

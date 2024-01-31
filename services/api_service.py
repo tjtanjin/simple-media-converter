@@ -25,5 +25,3 @@ async def call_successful_conversion():
     except (Exception,):
         # in the event of an exception, don't have to do anything (i.e. ok to lose some counts).
         pass
-
-

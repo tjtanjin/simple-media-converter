@@ -5,10 +5,11 @@ from telegram.constants import ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CallbackQueryHandler, ConversationHandler, MessageHandler, filters
 
-from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, handle_interaction_cancel, \
-    handle_interaction_not_allowed
+from interactions.utils import TIMEOUT_DURATION, handle_interaction_timeout, \
+    handle_interaction_cancel, handle_interaction_not_allowed
 from services.conversion_service import convert_image
-from services.media_service import IMAGE_OUTPUT_TYPES, input_media_exist, clean_up_media, IMAGE_INPUT_TYPES
+from services.media_service import IMAGE_OUTPUT_TYPES, input_media_exist, clean_up_media, \
+    IMAGE_INPUT_TYPES
 from services.message_service import send_message, update_message, send_document, parse_placeholders
 from ui.builder import show_conversion_options, show_animated_loader
 
@@ -20,7 +21,7 @@ def handle_image_input():
     return ConversationHandler(
         entry_points=[MessageHandler(filters.PHOTO, get_uploaded_image)],
         states={
-            1: [CallbackQueryHandler(handle_image_output, pattern='image_(\S+)_(\S+)')],
+            1: [CallbackQueryHandler(handle_image_output, pattern='image_(\S+)_(\S+)')], # noqa
             ConversationHandler.TIMEOUT: [MessageHandler(filters.ALL, handle_interaction_timeout)]
         },
         fallbacks=[
@@ -46,8 +47,8 @@ async def get_uploaded_image(update, context):
         await send_message(context, chat_id, i18n.t("interaction.file_not_supported"))
         return ConversationHandler.END
 
-    # if sent as photo, no way to detect file name to parse type - hence defaults to jpg and users are encouraged to
-    # send images as a file if conversion result is less than desirable
+    # if sent as photo, no way to detect file name to parse type - hence defaults to jpg and users
+    # are encouraged to send images as a file if conversion result is less than desirable
     await send_message(context, chat_id, i18n.t("image.advise"))
 
     await process_upload_as_image(context, chat_id, file_id, "jpg")
@@ -78,7 +79,7 @@ async def process_upload_as_image(context, chat_id, file_id, input_type):
 
 async def handle_image_output(update, context):
     """
-    Performs conversion upon user's selection of desired output image type and returns the final result.
+    Performs conversion upon user's selection of output image type and returns the final result.
     Args:
         update: default telegram arg
         context: default telegram arg
@@ -96,17 +97,20 @@ async def handle_image_output(update, context):
             return ConversationHandler.END
 
         selection_msg = update.callback_query.message
-        processing_msg = await update_message(selection_msg, parse_placeholders(i18n.t("conversion.in_progress"),
-                                                                                    ["%input_type%", "%output_type%"],
-                                                                                    [input_type, output_type]))
-        conversion_process = threading.Thread(target=convert_image, args=(chat_id, input_type, output_type))
+        processing_msg = await update_message(selection_msg,
+                                              parse_placeholders(i18n.t("conversion.in_progress"),
+                                                                 ["%input_type%", "%output_type%"],
+                                                                 [input_type, output_type]))
+        conversion_process = threading.Thread(target=convert_image, args=(chat_id, input_type,
+                                                                          output_type))
         conversion_process.start()
         while conversion_process.is_alive():
             await show_animated_loader(processing_msg)
         await update_message(processing_msg, parse_placeholders(i18n.t("conversion.complete"),
                                                                 ["%input_type%", "%output_type%"],
                                                                 [input_type, output_type]))
-        await send_document(context, chat_id, f"./output_media/{chat_id}.{output_type}", i18n.t("conversion.send_file"))
+        await send_document(context, chat_id, f"./output_media/{chat_id}.{output_type}",
+                            i18n.t("conversion.send_file"))
     # throw error on failure
     except (Exception,):
         await update_message(selection_msg, i18n.t("misc.error"), parse_mode=ParseMode.HTML)

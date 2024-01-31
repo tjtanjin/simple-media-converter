@@ -10,13 +10,15 @@ STICKER_INPUT_TYPES = json.loads(os.getenv("STICKER_INPUT_TYPES"))
 # used to handle supported output media types
 IMAGE_OUTPUT_TYPES = json.loads(os.getenv("IMAGE_OUTPUT_TYPES"))
 VIDEO_OUTPUT_TYPES = json.loads(os.getenv("VIDEO_OUTPUT_TYPES"))
-STICKER_OUTPUT_TYPES = VIDEO_OUTPUT_TYPES + IMAGE_OUTPUT_TYPES  # sticker outputs to either image/video
+STICKER_OUTPUT_TYPES = VIDEO_OUTPUT_TYPES + IMAGE_OUTPUT_TYPES  # sticker outputs to image/video
 
-# used to handle mime type checks on upload (fields auto-generated from supported image/video input types to mime types)
+# used to handle mime type checks on upload (fields auto-generated from supported types)
 with open("./assets/file-extension-to-mime-types.json", "r") as file:
     mimetypes = json.load(file)
-DOCUMENT_IMAGE_INPUT_TYPES = list(map(lambda input_type: mimetypes["image"][input_type], IMAGE_INPUT_TYPES))
-DOCUMENT_VIDEO_INPUT_TYPES = list(map(lambda input_type: mimetypes["video"][input_type], VIDEO_INPUT_TYPES))
+DOCUMENT_IMAGE_INPUT_TYPES = list(map(lambda input_type: mimetypes["image"][input_type],
+                                      IMAGE_INPUT_TYPES))
+DOCUMENT_VIDEO_INPUT_TYPES = list(map(lambda input_type: mimetypes["video"][input_type],
+                                      VIDEO_INPUT_TYPES))
 
 
 def input_media_exist(chat_id, input_type):
@@ -61,7 +63,8 @@ def clean_up_media(chat_id, input_type, output_type):
 
 def purge_user_media(media_dir, chat_id):
     """
-    Purges all media from a user in given directory (used to handle cleanup during timeouts with untracked media types).
+    Purges all media from a user in given directory.
+    Used to handle cleanup during timeouts with untracked media types.
     Args:
         media_dir: directory where media is (input/output)
         chat_id: id of user to purge

@@ -24,7 +24,8 @@ async def send_message(context, user_id, text, markup=None, parse_mode=ParseMode
         markup: markup for showing buttons, defaults to none
         parse_mode: mode to parse the string, defaults to HTML
     """
-    return await context.bot.send_message(user_id, text, reply_markup=markup, disable_web_page_preview=True,
+    return await context.bot.send_message(user_id, text, reply_markup=markup,
+                                          disable_web_page_preview=True,
                                           parse_mode=parse_mode)
 
 
@@ -37,7 +38,8 @@ async def update_message(message, text, markup=None, parse_mode=ParseMode.HTML):
         markup: markup for showing buttons, defaults to none
         parse_mode: mode to parse the string, defaults to HTML
     """
-    return await message.edit_text(text=text, reply_markup=markup, disable_web_page_preview=True, parse_mode=parse_mode)
+    return await message.edit_text(text=text, reply_markup=markup, disable_web_page_preview=True,
+                                   parse_mode=parse_mode)
 
 
 async def send_document(context, user_id, document_path, caption):
@@ -49,7 +51,8 @@ async def send_document(context, user_id, document_path, caption):
        document_path: path to the document being sent
        caption: text message to accompany the document
    """
-    return await context.bot.send_document(chat_id=user_id, document=open(document_path, 'rb'), caption=caption)
+    return await context.bot.send_document(chat_id=user_id, document=open(document_path, 'rb'),
+                                           caption=caption)
 
 
 def parse_placeholders(string, keys, values):
