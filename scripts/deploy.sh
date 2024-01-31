@@ -22,7 +22,7 @@ then
 
     # removes stopped container
     echo "Removing stopped container..."
-    docker rm $1
+    docker rm -f $1
     echo "Container removed."
 fi
 
