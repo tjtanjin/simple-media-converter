@@ -2,8 +2,10 @@ name: Docker Hub
 run-name: Docker Hub
 
 on:
-  push:
-    branches: [ "master" ]
+  workflow_run:
+    workflows: ["Flake8 Lint"]
+    types:
+      - completed
 
 env:
   REGISTRY: docker.io
@@ -13,6 +15,7 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
